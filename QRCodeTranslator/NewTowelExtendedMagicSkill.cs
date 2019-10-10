@@ -9,24 +9,23 @@ namespace QRCodeTranslator
     //QRコードからデータベースにアクセスし、呪文と属性を取得するクラス
     public class NewTowelExtendedMagicSkill
     {
-        //QRコード内の文字列のハッシュと攻撃力と属性
+        //QRコード内の文字列のハッシュと、生成する呪文と属性と攻撃力
         private readonly string Hash;
         public string Spell1 { get; private set; }
         public string Spell2 { get; private set; }
         public string Attribute { get; private set; }
-        
-        public NewTowelExtendedMagicSkill(string qrString, bool isHigher)
+		public int Power { get; private set; }
+
+		public NewTowelExtendedMagicSkill(string qrString, bool isHigher, string enemyAttr, string databasePath)
         {
             //ハッシュ化
             Hash = EncryptQRString(qrString);
 
             //Hashから呪文の組み合わせと攻撃力を決定
-            HashToSpellAndAttribute(Hash);
-
-			RegulatePower rp = new RegulatePower();
-			rp.PowerDefinition(Hash, isHigher);
-
-        }
+            HashToSpellAndAttribute(Hash, databasePath);
+			var rp = new RegulatePower(qrString, Hash, isHigher, enemyAttr, Attribute);
+			Power = rp.Power;
+		}
 
         public string EncryptQRString(string qr)
         {
@@ -45,9 +44,9 @@ namespace QRCodeTranslator
         }
 
         //（仮：例）ハッシュを数桁ずつ3つに分け、データベース内の、それらをインデックスとする2つの呪文と属性を取得
-        public void HashToSpellAndAttribute(string hash)
-        {
-            var con = new SQLiteConnectionStringBuilder(@"DataSource=c:\Users\rokas\source\repos\NEMSTest\NEMSTest\bin\Debug\spell.db");
+        public void HashToSpellAndAttribute(string hash, string path)
+		{
+			var con = new SQLiteConnectionStringBuilder("Data Source=" + path);
             using (var cn = new SQLiteConnection(con.ToString()))
             {
                 cn.Open();
@@ -95,16 +94,18 @@ namespace QRCodeTranslator
 
 	//攻撃力の調整を行うクラス
 	internal class RegulatePower
-    {
-        //攻撃力
-        public int Power { get; private set; }
+	{
+		public int Power { get; private set; }
 
-        RegulatePower()
-        {
+		public RegulatePower(string qrString, string hash, bool isHigher, string enemyAttr, string playerAttr)
+		{
+			BasicPowerDefinition(hash, isHigher);
+			SNSBonusEffect(qrString);
+			AttributeMatchBonusEffect(enemyAttr, playerAttr);
 		}
 
         //ハッシュ文字列による攻撃力決定：上級コースか否かで基本攻撃力を分岐
-        public void PowerDefinition(string hash, bool isHigher)
+        public void BasicPowerDefinition(string hash, bool isHigher)
         {
             //ハッシュ文字列を分割
             string subHash = hash.Substring(21, 7);
@@ -123,7 +124,7 @@ namespace QRCodeTranslator
 			//分割したハッシュ文字列をpowers.min以上powers.max以下に変換
 			int power = Convert.ToInt32(subHash, 16) % (powers.max + 1 - powers.min) + powers.min;
 
-            Power += power;
+            Power = power;
         }
 
         //QRコードがSNSアカウントなどであれば攻撃力加点
@@ -140,8 +141,8 @@ namespace QRCodeTranslator
             }
         }
 
-        //敵と自分の属性が一致していれば攻撃力加点
-        public void AttributeMatchBonusEffect(string enemAttr, string playerAttr)
+		//敵と自分の属性が一致していれば攻撃力加点
+		public void AttributeMatchBonusEffect(string enemAttr, string playerAttr)
         {
             int bonus = 100;
 
