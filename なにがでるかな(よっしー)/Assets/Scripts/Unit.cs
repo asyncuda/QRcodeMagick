@@ -28,7 +28,7 @@ public class Unit : MonoBehaviour
         {
             hp = 0;
         }
-        Instantiate(DamageText, new Vector3(transform.position.x,transform.position.y, 0), transform.rotation).GetComponent<TextMesh>().text = damage.ToString();
+        Instantiate(DamageText, new Vector3(transform.position.x,transform.position.y-0.3f, 0), transform.rotation).GetComponent<TextMesh>().text = damage.ToString();
     }
     
 
