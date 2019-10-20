@@ -6,12 +6,13 @@ using UnityEngine.SceneManagement;
 
 public class Button : MonoBehaviour
 {
-   
+    public Title title;
+    public static int level; //Enemy_picture.csで参照します(1＝レベル : 2=レベル2 : 3=レベル3 : 4=Multi)
 
     // Start is called before the first frame update
     void Start()
     {
-        
+      
     }
 
     // Update is called once per frame
@@ -25,12 +26,14 @@ public class Button : MonoBehaviour
 
     public void Startsingle()
     {
-        SceneManager.LoadScene("Battle");
+        title.buttonReset();//ボタンをsingle,Multi選択からレベル設定へ変更します
     }
     public void StartMulti()
     {
-        SceneManager.LoadScene("MultiBattle");
+        level = 4;
+        SceneManager.LoadScene("Battle");
     }
+
     public void Exit()
     {
 #if UNITY_EDITOR
@@ -38,5 +41,22 @@ public class Button : MonoBehaviour
 #elif UNITY_STANDALONE
     UnityEngine.Application.Quit();
 #endif
+    }
+
+
+    public void Level1()
+    {
+        level = 1;
+        SceneManager.LoadScene("Battle");
+    }
+    public void Level2()
+    {
+        level = 2;
+        SceneManager.LoadScene("Battle");
+    }
+    public void Level3()
+    {
+        level = 3;
+        SceneManager.LoadScene("Battle");
     }
 }
