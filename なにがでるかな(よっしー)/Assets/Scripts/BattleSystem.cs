@@ -9,6 +9,8 @@ public class BattleSystem : MonoBehaviour
     public Unit Player;
     public Unit Enemy;
 
+    public GameObject QRreadinfo;
+
     bool ContinueGame;
 
     [SerializeField] Text[] HP = new Text[2];
@@ -18,7 +20,7 @@ public class BattleSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        QRinfo.enabled = false;
+        QRreadinfo.SetActive(false);
         ContinueGame = true;
         HP[0].text = "HP "+(Player.hpmax).ToString()+"/"+(Player.hpmax).ToString();
         HP[1].text = "HP "+(Enemy.hpmax).ToString()+"/"+(Enemy.hpmax).ToString();
@@ -28,7 +30,10 @@ public class BattleSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            Quit();
+        }
     }
 
     IEnumerator battle()
@@ -59,14 +64,16 @@ public class BattleSystem : MonoBehaviour
     IEnumerator Player_action()
     {
         battlelog.text = "Playerのターン";
-        QRinfo.enabled = true;
+
+        QRreadinfo.SetActive(true);
 
         while (!Input.GetKeyDown(KeyCode.Space))
         {
             yield return null;
         }
 
-        QRinfo.enabled = false;
+
+        QRreadinfo.SetActive(false);
 
         Enemy.Ondamage(Player.Magic(Player.at));
         HP[1].text = "HP "+(Enemy.hp).ToString()+"/"+(Enemy.hpmax).ToString();
@@ -88,5 +95,12 @@ public class BattleSystem : MonoBehaviour
         yield break;
     }
 
-
+    void Quit()
+    {
+#if UNITY_EDITOR
+    UnityEditor.EditorApplication.isPlaying = false;
+#elif UNITY_STANDALONE
+    UnityEngine.Application.Quit();
+#endif
+    }
 }
