@@ -32,16 +32,16 @@ public class ParticlePracticescipt : MonoBehaviour
                 new ParticleSystem.Burst(4.0f,100)
             });
 
-        int attack;
+        int attack=0;
         if (attack >= 100)
         {
             main.startSize = 10.0f;
         }
-        else if (50 <= attack < 100)
+        else if (50 <= attack && attack < 100)
         {
             main.startSize = 5.0f;
         }
-        else (attack < 50);
+        else if(attack < 50)
         {
             main.startSize = 2.0f;
         }
