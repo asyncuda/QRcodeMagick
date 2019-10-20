@@ -1,13 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Unit : MonoBehaviour
 {
     public int hp=1;
-    [SerializeField] public int hpmax = 500;
-    [SerializeField] public int at;
+    public int hpmax = 500;
+    public int at = 50;
     public GameObject DamageText;
+
 
     // Start is called before the first frame update
     void Start()
@@ -28,9 +30,8 @@ public class Unit : MonoBehaviour
         {
             hp = 0;
         }
-        Instantiate(DamageText, new Vector3(transform.position.x,transform.position.y-0.3f, 0), transform.rotation).GetComponent<TextMesh>().text = damage.ToString();
+        Instantiate(DamageText, new Vector3(transform.position.x,transform.position.y-1f, 0), transform.rotation).GetComponent<TextMesh>().text = damage.ToString();
     }
-    
 
     public int Magic(int attack)
     {

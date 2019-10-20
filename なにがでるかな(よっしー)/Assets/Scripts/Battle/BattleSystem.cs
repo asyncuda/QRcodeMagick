@@ -9,12 +9,11 @@ public class BattleSystem : MonoBehaviour
     public Unit Player;
     public Unit Enemy;
 
-    public GameObject QRreadinfo;
+    public GameObject QRreadinfo;//QRをよみこませてね！のやつ
 
     bool ContinueGame;
 
     [SerializeField] Text[] HP = new Text[2];
-    [SerializeField] Text QRinfo;
     [SerializeField] Text battlelog;
 
     // Start is called before the first frame update
@@ -48,8 +47,14 @@ public class BattleSystem : MonoBehaviour
                 ContinueGame = false;
                 yield break;
             }
-
-            yield return Enemy_action();
+            if (Button.level == 4)
+            {
+                yield return Player2_action();
+            }
+            else
+            {
+                yield return Enemy_action();
+            }
             if (Player.hp <= 0)
             {
                 battlelog.text = "You lose...";
@@ -63,7 +68,7 @@ public class BattleSystem : MonoBehaviour
 
     IEnumerator Player_action()
     {
-        battlelog.text = "Playerのターン";
+        battlelog.text = "Blueのターン";
 
         QRreadinfo.SetActive(true);
 
@@ -80,6 +85,25 @@ public class BattleSystem : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         
+        yield break;
+    }
+
+    IEnumerator Player2_action()
+    {
+        battlelog.text = "Greenのターン";
+        QRreadinfo.SetActive(true);
+
+        while (!Input.GetKeyDown(KeyCode.Space))
+        {
+            yield return null;
+        }
+
+        QRreadinfo.SetActive(false);
+
+        Player.Ondamage(Enemy.Magic(Enemy.at));
+        HP[0].text = "HP " + (Player.hp).ToString() + "/" + (Player.hpmax).ToString();
+        yield return new WaitForSeconds(1f);
+
         yield break;
     }
 
