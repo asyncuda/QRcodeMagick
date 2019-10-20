@@ -8,6 +8,7 @@ public class CallingNEMS : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+		//引数：string QRコードの文字列、bool 上級コースか、string 敵の属性、string データベースのパス
 		var nems = new NewTowelExtendedMagicSkill("qrCodeString", true, "FIRE", Application.streamingAssetsPath+"/spells.db");
 		Debug.Log(Application.streamingAssetsPath);
 		Debug.Log(nems.Spell1);
