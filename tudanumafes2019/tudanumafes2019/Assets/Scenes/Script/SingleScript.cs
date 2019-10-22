@@ -15,20 +15,12 @@ public class SingleScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.Escape)) Quit();
+        
     }
 
     public void GameStart()
     {
         SceneManager.LoadScene("RuleScene");
     }
-    
-    public void Quit()
-    {
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying=false;
-#else
-        Application.Quit();
-#endif
-    }
+ 
 }

@@ -191,6 +191,10 @@ GameObject:
   - component: {fileID: 1679164620}
   - component: {fileID: 1679164619}
   - component: {fileID: 1679164623}
+  - component: {fileID: 1679164625}
+  - component: {fileID: 1679164624}
+  - component: {fileID: 1679164626}
+  - component: {fileID: 1679164627}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -288,6 +292,54 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ad45724b1c75e0c4da86ce27bd56d969, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1679164624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1679164618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad45724b1c75e0c4da86ce27bd56d969, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1679164625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1679164618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad45724b1c75e0c4da86ce27bd56d969, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1679164626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1679164618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86f7e6789b1526248827f5524a2aacc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1679164627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1679164618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86f7e6789b1526248827f5524a2aacc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1721690367
