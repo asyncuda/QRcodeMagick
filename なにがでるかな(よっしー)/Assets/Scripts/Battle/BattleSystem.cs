@@ -15,6 +15,7 @@ public class BattleSystem : MonoBehaviour
 
     [SerializeField] Text[] HP = new Text[2];
     [SerializeField] Text battlelog;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -22,8 +23,8 @@ public class BattleSystem : MonoBehaviour
         BattleSet();
         QRreadinfo.SetActive(false);
         ContinueGame = true;
-        HP[0].text = "HP "+(Player.hpmax).ToString()+"/"+(Player.hpmax).ToString();
-        HP[1].text = "HP "+(Enemy.hpmax).ToString()+"/"+(Enemy.hpmax).ToString();
+        HP[0].text = (Player.hpmax).ToString()+" / "+(Player.hpmax).ToString();
+        HP[1].text = (Enemy.hpmax).ToString()+" / "+(Enemy.hpmax).ToString();
         StartCoroutine(battle());
     }
 
@@ -120,7 +121,7 @@ public class BattleSystem : MonoBehaviour
         QRreadinfo.SetActive(false);
 
         Enemy.Ondamage(Player.Magic(Player.at));
-        HP[1].text = "HP "+(Enemy.hp).ToString()+"/"+(Enemy.hpmax).ToString();
+        HP[1].text = (Enemy.hp).ToString()+" / "+(Enemy.hpmax).ToString();
         yield return new WaitForSeconds(1f);
 
         
@@ -140,7 +141,7 @@ public class BattleSystem : MonoBehaviour
         QRreadinfo.SetActive(false);
 
         Player.Ondamage(Enemy.Magic(Enemy.at));
-        HP[0].text = "HP " + (Player.hp).ToString() + "/" + (Player.hpmax).ToString();
+        HP[0].text = (Player.hp).ToString() + " / " + (Player.hpmax).ToString();
         yield return new WaitForSeconds(1f);
 
         yield break;
@@ -152,7 +153,7 @@ public class BattleSystem : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         Player.Ondamage(Enemy.Magic(Enemy.at));
-        HP[0].text = "HP "+(Player.hp).ToString()+"/"+(Player.hpmax).ToString();
+        HP[0].text = (Player.hp).ToString()+" / "+(Player.hpmax).ToString();
         yield return new WaitForSeconds(1f);
        
         yield break;
