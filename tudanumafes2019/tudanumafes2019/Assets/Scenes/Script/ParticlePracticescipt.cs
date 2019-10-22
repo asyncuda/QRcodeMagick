@@ -35,11 +35,11 @@ public class ParticlePracticescipt : MonoBehaviour
         int attack=0;
         if (attack >= 100)
         {
-            main.startSize = 10.0f;
+            main.startSize = 7.0f;
         }
         else if (50 <= attack && attack < 100)
         {
-            main.startSize = 5.0f;
+            main.startSize = 4.0f;
         }
         else if(attack < 50)
         {
