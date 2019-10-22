@@ -8,7 +8,7 @@ public class damagetext : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GetComponent<Rigidbody2D>().AddForce(new Vector3(Random.Range(-80, 80), Random.Range(100, 180), 0));
+        GetComponent<Rigidbody2D>().AddForce(new Vector3(Random.Range(-50, 50), Random.Range(40, 100), 0));
         StartCoroutine(DestroyObject());
     }
 
