@@ -784,8 +784,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1458746599}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.42, y: 0.19, z: 9}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_LocalPosition: {x: 8, y: 0.5, z: 9}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
@@ -858,6 +858,7 @@ MonoBehaviour:
   BroomGhost: {fileID: 21300000, guid: 42dcfe633e581a34fb921a9f3e40c0a5, type: 3}
   PumpkinTotem: {fileID: 21300000, guid: 5a1978867c0517b4e89401f04cceeea6, type: 3}
   CorpseSeoul: {fileID: 21300000, guid: 5cf69442a62b0684ca421e2b91456965, type: 3}
+  green: {fileID: 21300000, guid: 029b2359e97ef94478d883dabb9bedec, type: 3}
 --- !u!212 &1766817537
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -914,7 +915,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1766817534}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.8, y: 0, z: 9}
+  m_LocalPosition: {x: -8, y: 0.5, z: 9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1064,5 +1065,4 @@ MonoBehaviour:
   HP:
   - {fileID: 841569261}
   - {fileID: 1886605993}
-  QRinfo: {fileID: 0}
   battlelog: {fileID: 1357700813}
