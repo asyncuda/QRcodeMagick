@@ -8,8 +8,8 @@ public class Unit : MonoBehaviour
     public int hp=1;
     public int hpmax = 500;
     [SerializeField]public int at = 1200;
-    public string name;
     public GameObject DamageText;
+    public GameObject DamageEffect;
 
 
     // Start is called before the first frame update
@@ -32,6 +32,7 @@ public class Unit : MonoBehaviour
             hp = 0;
         }
         Instantiate(DamageText, new Vector3(transform.position.x,transform.position.y-1f, 0), transform.rotation).GetComponent<TextMesh>().text = damage.ToString();
+        Instantiate(DamageEffect, transform).GetComponent<ParticleSystem>().Play();
     }
 
     public int Magic(int attack)
