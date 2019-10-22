@@ -19,6 +19,7 @@ public class BattleSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        BattleSet();
         QRreadinfo.SetActive(false);
         ContinueGame = true;
         HP[0].text = "HP "+(Player.hpmax).ToString()+"/"+(Player.hpmax).ToString();
@@ -35,18 +36,47 @@ public class BattleSystem : MonoBehaviour
         }
     }
 
+    void BattleSet()
+    {
+        Player.hpmax = 18004;
+        Player.name = "Blue";
+        switch (Button.level)
+        {
+            case 1:
+                Enemy.hpmax = short.MaxValue;
+                Enemy.name = "ほうきおばけ";
+                break;
+            case 2:
+                Enemy.hpmax = ushort.MaxValue;
+                Enemy.name = "パンプキントーテム";
+                break;
+            case 3:
+                Enemy.hpmax = int.MaxValue;
+                Enemy.name = "コープスソウル";
+                break;
+            case 4:
+                Enemy.hpmax = 18004;
+                Enemy.name = "Green";
+                break;
+        }
+        Player.hp = Player.hpmax;
+        Enemy.hp = Enemy.hpmax;
+    }
+
     IEnumerator battle()
     {
         yield return new WaitForSeconds(1f);
         while (ContinueGame)
         {
             yield return Player_action();
+
             if (Enemy.hp <= 0)
             {
-                battlelog.text = "You win!";
+                battlelog.text = Player.name + " win!";
                 ContinueGame = false;
                 yield break;
             }
+
             if (Button.level == 4)
             {
                 yield return Player2_action();
@@ -55,12 +85,21 @@ public class BattleSystem : MonoBehaviour
             {
                 yield return Enemy_action();
             }
+
             if (Player.hp <= 0)
             {
-                battlelog.text = "You lose...";
+                if (Button.level == 4)
+                {
+                    battlelog.text = Enemy.name + " win!";
+                }
+                else
+                {
+                    battlelog.text = Player.name + " lose...";
+                }
                 ContinueGame = false;
                 yield break;
             }
+
 
         }
         yield break;
@@ -118,6 +157,7 @@ public class BattleSystem : MonoBehaviour
        
         yield break;
     }
+
 
     void Quit()
     {

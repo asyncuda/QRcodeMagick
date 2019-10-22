@@ -7,14 +7,15 @@ public class Unit : MonoBehaviour
 {
     public int hp=1;
     public int hpmax = 500;
-    public int at = 50;
+    [SerializeField]public int at = 1200;
+    public string name;
     public GameObject DamageText;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        hp = hpmax;
+       
     }
 
     // Update is called once per frame
