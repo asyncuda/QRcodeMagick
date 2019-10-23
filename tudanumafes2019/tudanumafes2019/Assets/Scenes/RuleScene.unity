@@ -112,7 +112,7 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &949949770
+--- !u!1 &78307676
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -120,23 +120,23 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 949949771}
-  - component: {fileID: 949949773}
-  - component: {fileID: 949949772}
+  - component: {fileID: 78307677}
+  - component: {fileID: 78307679}
+  - component: {fileID: 78307678}
   m_Layer: 5
-  m_Name: UnderText
+  m_Name: ExpainText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &949949771
+--- !u!224 &78307677
 RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 949949770}
+  m_GameObject: {fileID: 78307676}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 3, y: 3, z: 1}
@@ -146,23 +146,23 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 21.6, y: -214.3}
-  m_SizeDelta: {x: 643.1, y: 79.9}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &949949772
+  m_AnchoredPosition: {x: 21.6, y: -180.2}
+  m_SizeDelta: {x: 775.8, y: 246.5}
+  m_Pivot: {x: 0.5, y: 0.50000006}
+--- !u!114 &78307678
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 949949770}
+  m_GameObject: {fileID: 78307676}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.8396226, g: 0.7960573, b: 0.7960573, a: 1}
+  m_Color: {r: 0.990566, g: 0.9672036, b: 0.9672036, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -182,14 +182,14 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "QR\u30B3\u30FC\u30C9\u3092\uFF13\u3064\u3088\u3046\u3044\u3057\u3066\u306D"
---- !u!222 &949949773
+  m_Text: "QR\u30B3\u30FC\u30C9\u3092\u8AAD\u307F\u8FBC\u3093\u3067\n\u6575\u3092\u5012\u305D\u3046\n\u4F7F\u3046QR\u306B\u3088\u3063\u3066\u653B\u6483\u529B\u5909\u308F\u308B\u3088"
+--- !u!222 &78307679
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 949949770}
+  m_GameObject: {fileID: 78307676}
   m_CullTransparentMesh: 0
 --- !u!1 &1097097872
 GameObject:
@@ -250,7 +250,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 50
+    m_FontSize: 30
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -261,7 +261,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: TUTORIAL
+  m_Text: "\u30C1\u30E5\u30FC\u30C8\u30EA\u30A2\u30EB"
 --- !u!222 &1097097875
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -363,7 +363,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 1097097873}
-  - {fileID: 949949771}
+  - {fileID: 78307677}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

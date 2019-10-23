@@ -17,7 +17,10 @@ public class ChangeScript : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Escape)) Quit();
 
-        if (Input.GetKey(KeyCode.Space)) Change();
+        if (Input.GetMouseButtonDown(0))
+        {
+            SceneManager.LoadScene("TitleScene");
+        }
 
     }
 
@@ -28,10 +31,5 @@ public class ChangeScript : MonoBehaviour
 #else
         Application.Quit();
 #endif
-    }
-
-    public void Change()
-    {
-        SceneManager.LoadScene("TitleScene");
     }
 }
