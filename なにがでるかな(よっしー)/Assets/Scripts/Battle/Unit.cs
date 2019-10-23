@@ -44,8 +44,8 @@ public class Unit : MonoBehaviour
         switch (magic)
         {
             case 1:
-                Debug.Log("Magic1");
                 DAMAGE = attack * 1.8f + ransuu;
+                Debug.Log("Magic1");
                 break;
             case 2:
                 Debug.Log("Magic2");
