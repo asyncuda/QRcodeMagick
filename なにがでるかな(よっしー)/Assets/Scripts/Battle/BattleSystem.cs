@@ -143,10 +143,15 @@ public class BattleSystem : MonoBehaviour
         battlelog.text = "Greenのターン";
         QRreadinfo.SetActive(true);
 
-        while (!Input.GetKeyDown(KeyCode.Space))
+        string code;
+
+        while ((code = qr.InputLine()) == "")
         {
             yield return null;
         }
+        var MagickSkill = new NewTowelExtendedMagicSkill(code, false, "Fire", Application.streamingAssetsPath + "/spells.db");
+
+        Debug.Log("QR code is :" + code);
 
         QRreadinfo.SetActive(false);
 
