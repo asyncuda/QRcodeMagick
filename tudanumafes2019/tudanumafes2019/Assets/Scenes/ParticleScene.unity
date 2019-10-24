@@ -5641,12 +5641,12 @@ PrefabInstance:
     - target: {fileID: 6368644604044929849, guid: 8de812aad3e66584f983327000fc30a2,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 76.62
+      value: -495
       objectReference: {fileID: 0}
     - target: {fileID: 6368644604044929849, guid: 8de812aad3e66584f983327000fc30a2,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 59.76
+      value: -68
       objectReference: {fileID: 0}
     - target: {fileID: 6368644604044929849, guid: 8de812aad3e66584f983327000fc30a2,
         type: 3}
@@ -5687,6 +5687,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 743026721867921092, guid: 8de812aad3e66584f983327000fc30a2,
+        type: 3}
+      propertyPath: playOnAwake
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8de812aad3e66584f983327000fc30a2, type: 3}
@@ -5875,6 +5880,51 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9050657752748722405, guid: cb347543f3b03f6489367da70b8618e3,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -169
+      objectReference: {fileID: 0}
+    - target: {fileID: 9050657752748722405, guid: cb347543f3b03f6489367da70b8618e3,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 958
+      objectReference: {fileID: 0}
+    - target: {fileID: 1231005505319961345, guid: cb347543f3b03f6489367da70b8618e3,
+        type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1231005505319961345, guid: cb347543f3b03f6489367da70b8618e3,
+        type: 3}
+      propertyPath: ShapeModule.type
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1231005505319961345, guid: cb347543f3b03f6489367da70b8618e3,
+        type: 3}
+      propertyPath: InitialModule.gravityModifier.scalar
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: 1231005505319961345, guid: cb347543f3b03f6489367da70b8618e3,
+        type: 3}
+      propertyPath: ShapeModule.radiusThickness
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1231005505319961345, guid: cb347543f3b03f6489367da70b8618e3,
+        type: 3}
+      propertyPath: simulationSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1231005505319961345, guid: cb347543f3b03f6489367da70b8618e3,
+        type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1231005505319961345, guid: cb347543f3b03f6489367da70b8618e3,
+        type: 3}
+      propertyPath: looping
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cb347543f3b03f6489367da70b8618e3, type: 3}
