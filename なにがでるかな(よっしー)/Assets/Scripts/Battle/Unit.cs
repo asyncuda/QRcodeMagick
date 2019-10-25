@@ -57,7 +57,6 @@ public class Unit : MonoBehaviour
         {
             case 1:
                 DAMAGE = attack * 1.8f + ransuu;
-                Debug.Log("Magic1");
                 break;
             case 2:
                 DAMAGE = attack * 1.3f + ransuu;
