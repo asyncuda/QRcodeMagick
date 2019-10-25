@@ -32,7 +32,19 @@ public class Unit : MonoBehaviour
             hp = 0;
         }
         Instantiate(DamageText, new Vector3(transform.position.x,transform.position.y-1f, 0), transform.rotation).GetComponent<TextMesh>().text = damage.ToString();
-        Instantiate(DamageEffect, transform).GetComponent<ParticleSystem>().Play();
+
+        ParticleSystem ps = Instantiate(
+            DamageEffect,
+            new Vector3(transform.position.x, transform.position.y, 100), 
+            transform.rotation
+            ).GetComponent<ParticleSystem>();
+
+        var main = ps.main;
+        var trans = ps.transform;
+        main.scalingMode = ParticleSystemScalingMode.Hierarchy;
+        trans.localScale = new Vector3(10, 10, 10);
+
+        ps.Play();
     }
 
     public int Magic(int attack)
