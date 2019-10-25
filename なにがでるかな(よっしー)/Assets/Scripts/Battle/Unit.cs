@@ -60,15 +60,12 @@ public class Unit : MonoBehaviour
                 Debug.Log("Magic1");
                 break;
             case 2:
-                Debug.Log("Magic2");
                 DAMAGE = attack * 1.3f + ransuu;
                 break;
             case 3:
-                Debug.Log("Magic3");
                 DAMAGE = attack * 0.7f + ransuu;
                 break;
             case 4:
-                Debug.Log("Magic4");
                 DAMAGE = attack * 0.3f + ransuu;
                 break;
         }
