@@ -9,10 +9,12 @@ public class Button : MonoBehaviour
     public Title title;
     public static int level; //Enemy_picture.csで参照します(1＝レベル : 2=レベル2 : 3=レベル3 : 4=Multi)
 
+    public GameObject ChildText;
+
     // Start is called before the first frame update
     void Start()
     {
-      
+
     }
 
     // Update is called once per frame
@@ -43,6 +45,14 @@ public class Button : MonoBehaviour
 #endif
     }
 
+    public void Highlighted()
+    {
+        ChildText.GetComponent<Text>().color = Color.yellow;
+    }
+    public void DisHighlighted()
+    {
+        ChildText.GetComponent<Text>().color = Color.white;
+    }
 
     public void Level1()
     {

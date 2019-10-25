@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using QRCodeTranslator;
 
 public class BattleSystem : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class BattleSystem : MonoBehaviour
     public GameObject QRreadinfo;//QRをよみこませてね！のやつ
 
     bool ContinueGame;
+
+    private QRReader qr;
 
     [SerializeField] Text[] HP = new Text[2];
     [SerializeField] Text battlelog;
@@ -25,6 +28,9 @@ public class BattleSystem : MonoBehaviour
         ContinueGame = true;
         HP[0].text = (Player.hpmax).ToString()+" / "+(Player.hpmax).ToString();
         HP[1].text = (Enemy.hpmax).ToString()+" / "+(Enemy.hpmax).ToString();
+
+        qr = QRreadinfo.GetComponent<QRReader>();
+
         StartCoroutine(battle());
     }
 
@@ -105,18 +111,21 @@ public class BattleSystem : MonoBehaviour
         }
         yield break;
     }
-
     IEnumerator Player_action()
     {
         battlelog.text = "Blueのターン";
 
         QRreadinfo.SetActive(true);
 
-        while (!Input.GetKeyDown(KeyCode.Space))
+        string code;
+
+        while ((code = qr.InputLine()) == "")
         {
             yield return null;
         }
+        var MagickSkill = new NewTowelExtendedMagicSkill(code, false, "Fire", Application.streamingAssetsPath + "/spells.db");
 
+        Debug.Log("QR code is :" + code);
 
         QRreadinfo.SetActive(false);
 
@@ -128,15 +137,21 @@ public class BattleSystem : MonoBehaviour
         yield break;
     }
 
+
     IEnumerator Player2_action()
     {
         battlelog.text = "Greenのターン";
         QRreadinfo.SetActive(true);
 
-        while (!Input.GetKeyDown(KeyCode.Space))
+        string code;
+
+        while ((code = qr.InputLine()) == "")
         {
             yield return null;
         }
+        var MagickSkill = new NewTowelExtendedMagicSkill(code, false, "Fire", Application.streamingAssetsPath + "/spells.db");
+
+        Debug.Log("QR code is :" + code);
 
         QRreadinfo.SetActive(false);
 
