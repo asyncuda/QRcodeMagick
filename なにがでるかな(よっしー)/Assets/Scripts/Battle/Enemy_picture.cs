@@ -11,12 +11,9 @@ public class Enemy_picture : MonoBehaviour
     public Sprite CorpseSeoul;
     public Sprite green; //ここまで画像
 
-    int levelselect;
-
     // Start is called before the first frame update
     void Start()
     {
-        levelselect = Button.level;//Button.csで決定したレベルの値を代入します
         MainSpriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         ChangeState();
     }
@@ -29,13 +26,25 @@ public class Enemy_picture : MonoBehaviour
 
     void ChangeState()
     {
-        if(levelselect==1)
+        if (Button.level == 1)
+        {
             MainSpriteRenderer.sprite = BroomGhost;
-        if(levelselect==2)
+            this.transform.localScale = new Vector3(1, 1, 1);   
+        }
+        if (Button.level == 2)
+        {
             MainSpriteRenderer.sprite = PumpkinTotem;
-        if(levelselect==3)
+            this.transform.localScale = new Vector3(2, 2, 1);
+        }
+        if (Button.level == 3)
+        {
             MainSpriteRenderer.sprite = CorpseSeoul;
-        if (levelselect == 4)
+            this.transform.localScale = new Vector3(3, 3, 1);
+        }
+        if (Button.level == 4)
+        {
             MainSpriteRenderer.sprite = green;
+            this.transform.localScale = new Vector3(1, 1, 1);
+        }
     }
 }
