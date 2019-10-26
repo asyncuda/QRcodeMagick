@@ -72,7 +72,6 @@ public class BattleSystem : MonoBehaviour
 
     IEnumerator battle()
     {
-        yield return new WaitForSeconds(1f);
         while (ContinueGame)
         {
             yield return Player_action();
@@ -106,8 +105,6 @@ public class BattleSystem : MonoBehaviour
                 ContinueGame = false;
                 yield break;
             }
-
-
         }
         yield break;
     }
