@@ -123,7 +123,7 @@ public class BattleSystem : MonoBehaviour
         {
             yield return null;
         }
-        var MagickSkill = new NewTowelExtendedMagicSkill(code, false, "Fire", Application.streamingAssetsPath + "/spells.db");
+        var MagickSkill = new NewTowelExtendedMagicSkill(code, 3, "FIRE", Application.streamingAssetsPath + "/spells.db");
 
         Debug.Log("QR code is :" + code);
 
@@ -149,7 +149,7 @@ public class BattleSystem : MonoBehaviour
         {
             yield return null;
         }
-        var MagickSkill = new NewTowelExtendedMagicSkill(code, false, "Fire", Application.streamingAssetsPath + "/spells.db");
+        var MagickSkill = new NewTowelExtendedMagicSkill(code, 3, "FIRE", Application.streamingAssetsPath + "/spells.db");
 
         Debug.Log("QR code is :" + code);
 
