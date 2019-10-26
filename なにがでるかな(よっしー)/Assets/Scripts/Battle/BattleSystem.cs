@@ -18,7 +18,9 @@ public class BattleSystem : MonoBehaviour
 
     [SerializeField] Text[] HP = new Text[2];
     [SerializeField] Text battlelog;
-    
+
+    private Color MyOrange = new Color(255.0f / 255.0f, 165f / 255f, 0f);
+
 
     // Start is called before the first frame update
     void Start()
@@ -60,6 +62,7 @@ public class BattleSystem : MonoBehaviour
             case 3:
                 Enemy.hpmax = int.MaxValue;
                 Enemy.name = "コープスソウル";
+                Enemy.at = 5000;
                 break;
             case 4:
                 Enemy.hpmax = 18004;
@@ -92,6 +95,7 @@ public class BattleSystem : MonoBehaviour
                 yield return Enemy_action();
             }
 
+
             if (Player.hp <= 0)
             {
                 if (Button.level == 4)
@@ -112,6 +116,9 @@ public class BattleSystem : MonoBehaviour
     {
         battlelog.text = "Blueのターン";
 
+        HP[0].color = MyOrange;
+        HP[1].color = Color.white;
+
         QRreadinfo.SetActive(true);
 
         string code;
@@ -120,16 +127,14 @@ public class BattleSystem : MonoBehaviour
         {
             yield return null;
         }
-        var MagickSkill = new NewTowelExtendedMagicSkill(code, false, "Fire", Application.streamingAssetsPath + "/spells.db");
+        //var MagickSkill = new NewTowelExtendedMagicSkill(code, false, "Fire", Application.streamingAssetsPath + "/spells.db");
 
         Debug.Log("QR code is :" + code);
 
         QRreadinfo.SetActive(false);
 
-        Enemy.Ondamage(Player.Magic(Player.at));
+        yield return Enemy.Ondamage(Player.Magic(Player.at));
         HP[1].text = (Enemy.hp).ToString()+" / "+(Enemy.hpmax).ToString();
-        yield return new WaitForSeconds(1f);
-
         
         yield break;
     }
@@ -138,6 +143,8 @@ public class BattleSystem : MonoBehaviour
     IEnumerator Player2_action()
     {
         battlelog.text = "Greenのターン";
+        HP[0].color = Color.white;
+        HP[1].color = MyOrange;
         QRreadinfo.SetActive(true);
 
         string code;
@@ -146,7 +153,7 @@ public class BattleSystem : MonoBehaviour
         {
             yield return null;
         }
-        var MagickSkill = new NewTowelExtendedMagicSkill(code, false, "Fire", Application.streamingAssetsPath + "/spells.db");
+        //var MagickSkill = new NewTowelExtendedMagicSkill(code, false, "Fire", Application.streamingAssetsPath + "/spells.db");
 
         Debug.Log("QR code is :" + code);
 
@@ -154,7 +161,6 @@ public class BattleSystem : MonoBehaviour
 
         Player.Ondamage(Enemy.Magic(Enemy.at));
         HP[0].text = (Player.hp).ToString() + " / " + (Player.hpmax).ToString();
-        yield return new WaitForSeconds(1f);
 
         yield break;
     }
@@ -162,11 +168,11 @@ public class BattleSystem : MonoBehaviour
     IEnumerator Enemy_action()
     {
         battlelog.text = "Enemyのターン";
-        yield return new WaitForSeconds(1f);
+        HP[1].color = MyOrange;
+        HP[0].color = Color.white;
 
-        Player.Ondamage(Enemy.Magic(Enemy.at));
+        yield return Player.Ondamage(Enemy.Magic(Enemy.at));
         HP[0].text = (Player.hp).ToString()+" / "+(Player.hpmax).ToString();
-        yield return new WaitForSeconds(1f);
        
         yield break;
     }
