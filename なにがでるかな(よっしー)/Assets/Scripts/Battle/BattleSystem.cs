@@ -49,6 +49,8 @@ public class BattleSystem : MonoBehaviour
     {
         Player.hpmax = 18004;
         Player.name = "Blue";
+        Player.at = 5000;
+        Enemy.at = 3000;
         switch (Button.level)
         {
             case 1:
@@ -63,6 +65,7 @@ public class BattleSystem : MonoBehaviour
                 Enemy.hpmax = int.MaxValue;
                 Enemy.name = "コープスソウル";
                 Enemy.at = 5000;
+                Player.at = 500000000;
                 break;
             case 4:
                 Enemy.hpmax = 18004;
@@ -127,7 +130,9 @@ public class BattleSystem : MonoBehaviour
         {
             yield return null;
         }
-        //var MagickSkill = new NewTowelExtendedMagicSkill(code, false, "Fire", Application.streamingAssetsPath + "/spells.db");
+        /*
+        var MagickSkill = new NewTowelExtendedMagicSkill(code, Button.level.ToString(), "FIRE", Application.streamingAssetsPath + "/spells.db");
+        */
 
         Debug.Log("QR code is :" + code);
 
@@ -159,7 +164,7 @@ public class BattleSystem : MonoBehaviour
 
         QRreadinfo.SetActive(false);
 
-        Player.Ondamage(Enemy.Magic(Enemy.at));
+        yield return Player.Ondamage(Enemy.Magic(Enemy.at));
         HP[0].text = (Player.hp).ToString() + " / " + (Player.hpmax).ToString();
 
         yield break;
