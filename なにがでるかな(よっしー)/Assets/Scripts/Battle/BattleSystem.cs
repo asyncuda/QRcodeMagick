@@ -21,6 +21,14 @@ public class BattleSystem : MonoBehaviour
 
     private Color MyOrange = new Color(255.0f / 255.0f, 165f / 255f, 0f);
 
+    /* ビルド時に必要なフォルダが変わる可能性を考えたが、streamingAssetsPathで大丈夫っぽい...?
+    #if UNITY_EDITOR
+        private readonly string DataBasePath = Application.streamingAssetsPath + @"\spells.db";
+    #elif UNITY_STANDALONE
+        private readonly string DataBasePath = @"C:\Users\extrme\Desktop\なにかてるかな_Data\StreamingAssets\spells.db";
+    #endif
+    */
+    private readonly string DataBasePath = Application.streamingAssetsPath + @"\spells.db";
 
     // Start is called before the first frame update
     void Start()
@@ -49,6 +57,8 @@ public class BattleSystem : MonoBehaviour
     {
         Player.hpmax = 18004;
         Player.name = "Blue";
+        Player.at = 5000;
+        Enemy.at = 3000;
         switch (Button.level)
         {
             case 1:
@@ -63,6 +73,7 @@ public class BattleSystem : MonoBehaviour
                 Enemy.hpmax = int.MaxValue;
                 Enemy.name = "コープスソウル";
                 Enemy.at = 5000;
+                Player.at = 500000000;
                 break;
             case 4:
                 Enemy.hpmax = 18004;
@@ -127,7 +138,8 @@ public class BattleSystem : MonoBehaviour
         {
             yield return null;
         }
-        //var MagickSkill = new NewTowelExtendedMagicSkill(code, false, "Fire", Application.streamingAssetsPath + "/spells.db");
+        var MagickSkill = new NewTowelExtendedMagicSkill(code, 3, "FIRE", DataBasePath);
+        HP[0].text = (MagickSkill.Spell1 + "." + MagickSkill.Spell2);
 
         Debug.Log("QR code is :" + code);
 
@@ -153,13 +165,14 @@ public class BattleSystem : MonoBehaviour
         {
             yield return null;
         }
-        //var MagickSkill = new NewTowelExtendedMagicSkill(code, false, "Fire", Application.streamingAssetsPath + "/spells.db");
+        var MagickSkill = new NewTowelExtendedMagicSkill(code, 3, "FIRE", DataBasePath);
+        HP[1].text = (MagickSkill.Spell1 + "." + MagickSkill.Spell2);
 
         Debug.Log("QR code is :" + code);
 
         QRreadinfo.SetActive(false);
 
-        Player.Ondamage(Enemy.Magic(Enemy.at));
+        yield return Player.Ondamage(Enemy.Magic(Enemy.at));
         HP[0].text = (Player.hp).ToString() + " / " + (Player.hpmax).ToString();
 
         yield break;
@@ -171,9 +184,12 @@ public class BattleSystem : MonoBehaviour
         HP[1].color = MyOrange;
         HP[0].color = Color.white;
 
+        var MagickSkill = new NewTowelExtendedMagicSkill("hello world", 3, "FIRE", DataBasePath);
+        HP[1].text = (MagickSkill.Spell1 + "." + MagickSkill.Spell2);
+       
         yield return Player.Ondamage(Enemy.Magic(Enemy.at));
         HP[0].text = (Player.hp).ToString()+" / "+(Player.hpmax).ToString();
-       
+
         yield break;
     }
 

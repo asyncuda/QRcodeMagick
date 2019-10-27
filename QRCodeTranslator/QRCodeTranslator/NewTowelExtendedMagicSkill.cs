@@ -6,28 +6,48 @@ using System.Text.RegularExpressions;
 
 namespace QRCodeTranslator
 {
-    //QRコードからデータベースにアクセスし、呪文と属性を取得するクラス
-    public class NewTowelExtendedMagicSkill
-    {
-        //QRコード内の文字列のハッシュと、生成する呪文と属性と攻撃力
-        private readonly string Hash;
-        public string Spell1 { get; private set; }
-        public string Spell2 { get; private set; }
-        public string Attribute { get; private set; }
+	//QRコードからデータベースにアクセスし、呪文と属性を取得するクラス
+	public class NewTowelExtendedMagicSkill
+	{
+		//挑戦するコースの難易度の選択肢
+		internal enum Level { Easy = 1, Normal, Hard};
+
+		//QRコード内の文字列のハッシュと、生成する呪文と属性と攻撃力
+		private readonly string Hash;
+		/// <value>呪文１</value>
+		public string Spell1 { get; private set; }
+        ///<value>呪文２</value> 
+		public string Spell2 { get; private set; }
+		///<value>呪文の属性</value> 
+		public string Attribute { get; private set; }
+		///<value>攻撃力</value> 
 		public int Power { get; private set; }
 
-		public NewTowelExtendedMagicSkill(string qrString, bool isHigher, string enemyAttr, string databasePath)
+		///<summary>
+		/// 中級、上級コース時に参照される、QRコードの文字列から2つの呪文とその属性・攻撃力を生成するクラスのコンストラクタ。
+		/// </summary>
+		/// <param name="qrString">QRコードの文字列</param>
+		/// <param name="level">選択されたコース [Easy, Normal, Hard]</param>
+		/// <param name="enemyAttr">敵の属性</param>
+		/// <param name="databasePath">呪文と属性が保存されているデータベースのパス</param>
+		public NewTowelExtendedMagicSkill(string qrString, int level, string enemyAttr, string databasePath)
         {
-            //ハッシュ化
+			//level4(2人プレイ)はlevel1(初級コース)に合わせる。
+			if (level == 4) level = 1;
+            
+			//ハッシュ化
             Hash = EncryptQRString(qrString);
 
-            //Hashから呪文の組み合わせと攻撃力を決定
-            HashToSpellAndAttribute(Hash, databasePath);
-			var rp = new RegulatePower(qrString, Hash, isHigher, enemyAttr, Attribute);
+            //Hashから呪文の組み合わせと属性を決定
+
+            HashToSpellAndAttribute(Hash, level, databasePath);
+
+			//攻撃力の決定
+			var rp = new RegulatePower(qrString, Hash, level, enemyAttr, Attribute);
 			Power = rp.Power;
 		}
 
-        public string EncryptQRString(string qr)
+		public string EncryptQRString(string qr)
         {
             //引数をバイト配列に変換
             byte[] input = Encoding.ASCII.GetBytes(qr);
@@ -43,13 +63,13 @@ namespace QRCodeTranslator
             return result;
         }
 
-        //（仮：例）ハッシュを数桁ずつ3つに分け、データベース内の、それらをインデックスとする2つの呪文と属性を取得
-        public void HashToSpellAndAttribute(string hash, string path)
+		//（仮：例）ハッシュを数桁ずつ3つに分け、データベース内の、それらをインデックスとする2つの呪文と属性を取得
+		public void HashToSpellAndAttribute(string hash, int level, string path)
 		{
-			var con = new SQLiteConnectionStringBuilder("Data Source=" + path);
+			var con = new SQLiteConnectionStringBuilder($"Data Source={path}");
             using (var cn = new SQLiteConnection(con.ToString()))
             {
-                cn.Open();
+				cn.Open();
 
                 using (var cmd = new SQLiteCommand(cn))
                 {
@@ -67,10 +87,12 @@ namespace QRCodeTranslator
                     // 呪文を、ハッシュ値から得られたランダムなデータベースの行数から取得
                     Spell1 = SelectSpell(spell1Index, "spell1");
                     Spell2 = SelectSpell(spell2Index, "spell2");
-                    Attribute = SelectSpell(attributeIndex, "attribute");
+					
+					//初級コース時でないときのみ属性も取得する。初級コース時はAttributeはNULLにする。
+					Attribute = level == (int)Level.Easy ? null : SelectSpell(attributeIndex, "attribute");
 
-                    //取り出す位置、長さを指定したハッシュの部分文字列を数値に変換し、1以上呪文の個数以下の整数に変換
-                    int HashToIndex(int start, int end)
+					//取り出す位置、長さを指定したハッシュの部分文字列を数値に変換し、1以上呪文の個数以下の整数に変換
+					int HashToIndex(int start, int end)
                     {
                         //ハッシュ文字列を分割
                         string substr = hash.Substring(start, end);
@@ -88,6 +110,7 @@ namespace QRCodeTranslator
 
                     }                 
                 }
+				cn.Close();
             }
         }      
     }
@@ -95,17 +118,19 @@ namespace QRCodeTranslator
 	//攻撃力の調整を行うクラス
 	internal class RegulatePower
 	{
-		public int Power { get; private set; }
-
-		public RegulatePower(string qrString, string hash, bool isHigher, string enemyAttr, string playerAttr)
+		
+		internal int Power;
+		
+		public RegulatePower(string qrString, string hash, int level, string enemyAttr, string playerAttr)
 		{
-			BasicPowerDefinition(hash, isHigher);
+			BasicPowerDefinition(hash, level);
 			SNSBonusEffect(qrString);
-			AttributeMatchBonusEffect(enemyAttr, playerAttr);
+			if(enemyAttr != null && playerAttr != null) AttributeMatchBonusEffect(enemyAttr, playerAttr);
 		}
 
+		
         //ハッシュ文字列による攻撃力決定：上級コースか否かで基本攻撃力を分岐
-        public void BasicPowerDefinition(string hash, bool isHigher)
+        public void BasicPowerDefinition(string hash, int level)
         {
             //ハッシュ文字列を分割
             string subHash = hash.Substring(21, 7);
@@ -113,13 +138,14 @@ namespace QRCodeTranslator
             //最大・最小攻撃力を保持するタプル
             (int min, int max) powers;
 
-            //ボス戦だった場合の最小・最大攻撃力
-            (int min, int max) specialPowerForHigherCourse = (min: 10 ^ 4, max: 10 ^ 9);
+            //上級コースだった場合の最小・最大攻撃力
+            (int min, int max) specialPowerForHigherCourse = (min: 10 ^ 8, max: 10 ^ 9);
             //通常の最小・最大攻撃力
             (int min, int max) normalPower = (min: 100, max: 10 ^ 4);
 
-            //ボス戦かどうかに合わせて最小・最大攻撃力を設定
-            powers = isHigher ? specialPowerForHigherCourse : normalPower;
+            //上級コースかどうかに合わせて最小・最大攻撃力を設定
+            powers = (level == 3
+				) ? specialPowerForHigherCourse : normalPower;
 
 			//分割したハッシュ文字列をpowers.min以上powers.max以下に変換
 			int power = Convert.ToInt32(subHash, 16) % (powers.max + 1 - powers.min) + powers.min;
@@ -141,7 +167,7 @@ namespace QRCodeTranslator
             }
         }
 
-		//敵と自分の属性が一致していれば攻撃力加点
+		//[中・上級コース選択時] 敵と自分の属性が一致していれば攻撃力加点
 		public void AttributeMatchBonusEffect(string enemAttr, string playerAttr)
         {
             int bonus = 100;
