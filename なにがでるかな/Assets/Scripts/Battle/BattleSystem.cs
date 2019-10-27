@@ -11,13 +11,13 @@ public class BattleSystem : MonoBehaviour
     public Unit Enemy;
 
     public GameObject QRreadinfo;//QRをよみこませてね！のやつ
+    public GameObject magictext;
 
     bool ContinueGame;
 
     private QRReader qr;
 
     [SerializeField] Text[] HP = new Text[2];
-    [SerializeField] Text battlelog;
 
     private Color MyOrange = new Color(255.0f / 255.0f, 165f / 255f, 0f);
 
@@ -35,6 +35,7 @@ public class BattleSystem : MonoBehaviour
     {
         BattleSet();
         QRreadinfo.SetActive(false);
+        magictext.SetActive(false);
         ContinueGame = true;
         HP[0].text = (Player.hpmax).ToString()+" / "+(Player.hpmax).ToString();
         HP[1].text = (Enemy.hpmax).ToString()+" / "+(Enemy.hpmax).ToString();
@@ -92,11 +93,10 @@ public class BattleSystem : MonoBehaviour
 
             if (Enemy.hp <= 0)
             {
-                battlelog.text = Player.name + " win!";
                 ContinueGame = false;
                 yield break;
             }
-
+            yield return new WaitForSeconds(0.4f);
             if (Button.level == 4)
             {
                 yield return Player2_action();
@@ -111,11 +111,11 @@ public class BattleSystem : MonoBehaviour
             {
                 if (Button.level == 4)
                 {
-                    battlelog.text = Enemy.name + " win!";
+                    
                 }
                 else
                 {
-                    battlelog.text = Player.name + " lose...";
+                    
                 }
                 ContinueGame = false;
                 yield break;
@@ -125,7 +125,10 @@ public class BattleSystem : MonoBehaviour
     }
     IEnumerator Player_action()
     {
-        battlelog.text = "Blueのターン";
+        
+
+        HP[0].color = MyOrange;
+        HP[1].color = Color.white;
 
         HP[0].color = MyOrange;
         HP[1].color = Color.white;
@@ -139,7 +142,9 @@ public class BattleSystem : MonoBehaviour
             yield return null;
         }
         var MagickSkill = new NewTowelExtendedMagicSkill(code, 3, "FIRE", DataBasePath);
-        HP[0].text = (MagickSkill.Spell1 + "." + MagickSkill.Spell2);
+
+        magictext.SetActive(true);
+        magictext.GetComponent<Text>().text = (MagickSkill.Spell1 + "." + MagickSkill.Spell2);
 
         Debug.Log("QR code is :" + code);
 
@@ -147,14 +152,13 @@ public class BattleSystem : MonoBehaviour
 
         yield return Enemy.Ondamage(Player.Magic(Player.at));
         HP[1].text = (Enemy.hp).ToString()+" / "+(Enemy.hpmax).ToString();
-        
+
         yield break;
     }
 
 
     IEnumerator Player2_action()
     {
-        battlelog.text = "Greenのターン";
         HP[0].color = Color.white;
         HP[1].color = MyOrange;
         QRreadinfo.SetActive(true);
@@ -166,7 +170,9 @@ public class BattleSystem : MonoBehaviour
             yield return null;
         }
         var MagickSkill = new NewTowelExtendedMagicSkill(code, 3, "FIRE", DataBasePath);
-        HP[1].text = (MagickSkill.Spell1 + "." + MagickSkill.Spell2);
+
+        magictext.SetActive(true);
+        magictext.GetComponent<Text>().text = (MagickSkill.Spell1 + "." + MagickSkill.Spell2);
 
         Debug.Log("QR code is :" + code);
 
@@ -175,20 +181,24 @@ public class BattleSystem : MonoBehaviour
         yield return Player.Ondamage(Enemy.Magic(Enemy.at));
         HP[0].text = (Player.hp).ToString() + " / " + (Player.hpmax).ToString();
 
+        magictext.SetActive(false);
+
         yield break;
     }
 
     IEnumerator Enemy_action()
-    {
-        battlelog.text = "Enemyのターン";
+    {   
         HP[1].color = MyOrange;
         HP[0].color = Color.white;
 
         var MagickSkill = new NewTowelExtendedMagicSkill("hello world", 3, "FIRE", DataBasePath);
-        HP[1].text = (MagickSkill.Spell1 + "." + MagickSkill.Spell2);
-       
+        
+        magictext.SetActive(true);
+        magictext.GetComponent<Text>().text = (MagickSkill.Spell1 + "." + MagickSkill.Spell2);
+
         yield return Player.Ondamage(Enemy.Magic(Enemy.at));
         HP[0].text = (Player.hp).ToString()+" / "+(Player.hpmax).ToString();
+        magictext.SetActive(false);
 
         yield break;
     }
