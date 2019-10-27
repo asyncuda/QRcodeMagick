@@ -19,7 +19,7 @@ public class ChangeScript : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            SceneManager.LoadScene("TitleScene");
+            SceneManager.LoadScene("Title");
         }
 
     }

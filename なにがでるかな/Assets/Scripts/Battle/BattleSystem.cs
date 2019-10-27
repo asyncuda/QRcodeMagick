@@ -13,7 +13,7 @@ public class BattleSystem : MonoBehaviour
     public GameObject QRreadinfo;//QRをよみこませてね！のやつ
     public GameObject magictext;
 
-    bool ContinueGame;
+    
 
     private QRReader qr;
 
@@ -36,9 +36,9 @@ public class BattleSystem : MonoBehaviour
         BattleSet();
         QRreadinfo.SetActive(false);
         magictext.SetActive(false);
-        ContinueGame = true;
-        HP[0].text = (Player.hpmax).ToString()+" / "+(Player.hpmax).ToString();
-        HP[1].text = (Enemy.hpmax).ToString()+" / "+(Enemy.hpmax).ToString();
+        
+        HP[0].text = (Player.name).ToString()+"\n"+(Player.hpmax).ToString()+" / "+(Player.hpmax).ToString();
+        HP[1].text = (Enemy.name).ToString()+"\n"+(Enemy.hpmax).ToString()+" / "+(Enemy.hpmax).ToString();
 
         qr = QRreadinfo.GetComponent<QRReader>();
 
@@ -87,13 +87,15 @@ public class BattleSystem : MonoBehaviour
 
     IEnumerator battle()
     {
-        while (ContinueGame)
+        while (true)
         {
             yield return Player_action();
 
             if (Enemy.hp <= 0)
             {
-                ContinueGame = false;
+                yield return new WaitForSeconds(1f);
+                //SceneManager.LoadScene("");
+                
                 yield break;
             }
             yield return new WaitForSeconds(0.4f);
@@ -111,17 +113,18 @@ public class BattleSystem : MonoBehaviour
             {
                 if (Button.level == 4)
                 {
-                    
+                    yield return new WaitForSeconds(1f);
+                    //SceneManager.LoadScene("");ゲームエンドシーンお願いします
                 }
                 else
                 {
-                    
+                    yield return new WaitForSeconds(1f);
+                    //SceneManager.LoadScene("");ゲームエンドシーンお願いします
                 }
-                ContinueGame = false;
+                
                 yield break;
             }
         }
-        yield break;
     }
     IEnumerator Player_action()
     {
@@ -151,7 +154,8 @@ public class BattleSystem : MonoBehaviour
         QRreadinfo.SetActive(false);
 
         yield return Enemy.Ondamage(Player.Magic(Player.at));
-        HP[1].text = (Enemy.hp).ToString()+" / "+(Enemy.hpmax).ToString();
+        HP[1].text = (Enemy.name).ToString()+"\n"+(Enemy.hp).ToString()+" / "+(Enemy.hpmax).ToString();
+        magictext.SetActive(false);
 
         yield break;
     }
@@ -179,7 +183,7 @@ public class BattleSystem : MonoBehaviour
         QRreadinfo.SetActive(false);
 
         yield return Player.Ondamage(Enemy.Magic(Enemy.at));
-        HP[0].text = (Player.hp).ToString() + " / " + (Player.hpmax).ToString();
+        HP[0].text = (Player.name).ToString()+"\n"+(Player.hp).ToString() + " / " + (Player.hpmax).ToString();
 
         magictext.SetActive(false);
 
@@ -197,7 +201,7 @@ public class BattleSystem : MonoBehaviour
         magictext.GetComponent<Text>().text = (MagickSkill.Spell1 + "." + MagickSkill.Spell2);
 
         yield return Player.Ondamage(Enemy.Magic(Enemy.at));
-        HP[0].text = (Player.hp).ToString()+" / "+(Player.hpmax).ToString();
+        HP[0].text = (Player.name).ToString()+"\n"+(Player.hp).ToString()+" / "+(Player.hpmax).ToString();
         magictext.SetActive(false);
 
         yield break;
