@@ -22,13 +22,6 @@ public class BattleSystem : MonoBehaviour
 
     private Color MyOrange = new Color(255.0f / 255.0f, 165f / 255f, 0f);
 
-    /* ビルド時に必要なフォルダが変わる可能性を考えたが、streamingAssetsPathで大丈夫っぽい...?
-    #if UNITY_EDITOR
-        private readonly string DataBasePath = Application.streamingAssetsPath + @"\spells.db";
-    #elif UNITY_STANDALONE
-        private readonly string DataBasePath = @"C:\Users\extrme\Desktop\なにかてるかな_Data\StreamingAssets\spells.db";
-    #endif
-    */
     private readonly string DataBasePath = Application.streamingAssetsPath + @"\spells.db";
 
     // Start is called before the first frame update
@@ -75,7 +68,7 @@ public class BattleSystem : MonoBehaviour
                 Enemy.hpmax = int.MaxValue;
                 Enemy.name = "コープスソウル";
                 Enemy.at = 5000;
-                Player.at = 500000000;
+                //Player.at = 500000000;
                 break;
             case 4:
                 Enemy.hpmax = 18004;
@@ -124,8 +117,6 @@ public class BattleSystem : MonoBehaviour
     }
     IEnumerator Player_action()
     {
-        
-
         HP[0].color = MyOrange;
         HP[1].color = Color.white;
 
@@ -149,7 +140,7 @@ public class BattleSystem : MonoBehaviour
 
         QRreadinfo.SetActive(false);
 
-        yield return Enemy.Ondamage(Player.Magic(Player.at));
+        yield return Enemy.Ondamage(Player.Magic(MagickSkill.Power, Button.level, Player.Attribute, Enemy.Attribute));
         HP[1].text = (Enemy.name).ToString()+"\n"+(Enemy.hp).ToString()+" / "+(Enemy.hpmax).ToString();
         magictext.SetActive(false);
 
@@ -178,7 +169,8 @@ public class BattleSystem : MonoBehaviour
 
         QRreadinfo.SetActive(false);
 
-        yield return Player.Ondamage(Enemy.Magic(Enemy.at));
+        // Player側のレベルは1だよね
+        yield return Player.Ondamage(Enemy.Magic(MagickSkill.Power, 1, MagickSkill.Attribute, Player.Attribute));
         HP[0].text = (Player.name).ToString()+"\n"+(Player.hp).ToString() + " / " + (Player.hpmax).ToString();
 
         magictext.SetActive(false);
@@ -196,7 +188,8 @@ public class BattleSystem : MonoBehaviour
         magictext.SetActive(true);
         magictext.GetComponent<Text>().text = (MagickSkill.Spell1 + "." + MagickSkill.Spell2);
 
-        yield return Player.Ondamage(Enemy.Magic(Enemy.at));
+        // Player側のレベルは1だよね
+        yield return Player.Ondamage(Enemy.Magic(MagickSkill.Power, 1, MagickSkill.Attribute, Player.Attribute));
         HP[0].text = (Player.name).ToString()+"\n"+(Player.hp).ToString()+" / "+(Player.hpmax).ToString();
         magictext.SetActive(false);
 

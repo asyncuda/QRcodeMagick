@@ -1185,7 +1185,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 1
   hpmax: 500
-  at: 300000000
+  Attribute: 
+  at: 0
   DamageText: {fileID: 9103829435579478778, guid: 95016d75495a48149840889903663361,
     type: 3}
   DamageEffect: {fileID: 100006, guid: 906ef3748a66347cfb2d72de10092732, type: 3}
@@ -1222,6 +1223,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 1
   hpmax: 65535
+  Attribute: 
   at: 1200
   DamageText: {fileID: 9103829435579478778, guid: 95016d75495a48149840889903663361,
     type: 3}
