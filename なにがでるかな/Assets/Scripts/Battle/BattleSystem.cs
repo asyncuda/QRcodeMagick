@@ -144,7 +144,7 @@ public class BattleSystem : MonoBehaviour
         {
             yield return null;
         }
-        var MagickSkill = new NewTowelExtendedMagicSkill(code, 3, "FIRE", DataBasePath);
+        var MagickSkill = new NewTowelExtendedMagicSkill(code, DataBasePath);
 
         magictext.SetActive(true);
         magictext.GetComponent<Text>().text = (MagickSkill.Spell1 + "." + MagickSkill.Spell2);
@@ -173,7 +173,7 @@ public class BattleSystem : MonoBehaviour
         {
             yield return null;
         }
-        var MagickSkill = new NewTowelExtendedMagicSkill(code, 3, "FIRE", DataBasePath);
+        var MagickSkill = new NewTowelExtendedMagicSkill(code, DataBasePath);
 
         magictext.SetActive(true);
         magictext.GetComponent<Text>().text = (MagickSkill.Spell1 + "." + MagickSkill.Spell2);
@@ -195,7 +195,7 @@ public class BattleSystem : MonoBehaviour
         HP[1].color = MyOrange;
         HP[0].color = Color.white;
 
-        var MagickSkill = new NewTowelExtendedMagicSkill("hello world", 3, "FIRE", DataBasePath);
+        var MagickSkill = new NewTowelExtendedMagicSkill("hello world", DataBasePath);
         
         magictext.SetActive(true);
         magictext.GetComponent<Text>().text = (MagickSkill.Spell1 + "." + MagickSkill.Spell2);
