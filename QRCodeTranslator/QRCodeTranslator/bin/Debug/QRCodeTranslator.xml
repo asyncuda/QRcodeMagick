@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>QRCodeTranslator</name>
+    </assembly>
+    <members>
+        <member name="T:QRCodeTranslator.NewTowelExtendedMagicSkill">
+            <summary>
+            QRコードからデータベースにアクセスし、呪文と属性を取得するクラス
+            </summary>
+        </member>
+        <member name="P:QRCodeTranslator.NewTowelExtendedMagicSkill.Spell1">
+            <summary>
+            呪文１
+            </summary>
+        </member>
+        <member name="P:QRCodeTranslator.NewTowelExtendedMagicSkill.Spell2">
+            <summary>
+            呪文２
+            </summary>
+        </member>
+        <member name="P:QRCodeTranslator.NewTowelExtendedMagicSkill.Attribute">
+            <summary>
+            呪文の属性
+            </summary>
+        </member>
+        <member name="P:QRCodeTranslator.NewTowelExtendedMagicSkill.Power">
+            <summary>
+            攻撃力
+            </summary>
+        </member>
+        <member name="P:QRCodeTranslator.NewTowelExtendedMagicSkill.SpecialCode">
+            <summary>
+            QRコードがSNSのURLだった場合にどのSNSなのかを保持する変数
+            </summary>
+        </member>
+        <member name="M:QRCodeTranslator.NewTowelExtendedMagicSkill.#ctor(System.String,System.String)">
+            <summary>
+            QRコードから2つの呪文とその属性・攻撃力を決定するクラス
+            </summary>
+            <param name="qrString">QRコードの文字列</param>
+            <param name="databasePath">データベースへのパス</param>
+        </member>
+    </members>
+</doc>
