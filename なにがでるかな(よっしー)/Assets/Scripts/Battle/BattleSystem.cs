@@ -11,20 +11,31 @@ public class BattleSystem : MonoBehaviour
     public Unit Enemy;
 
     public GameObject QRreadinfo;//QRをよみこませてね！のやつ
+    public GameObject magictext;
 
     bool ContinueGame;
 
     private QRReader qr;
 
     [SerializeField] Text[] HP = new Text[2];
-    [SerializeField] Text battlelog;
-    
+
+    private Color MyOrange = new Color(255.0f / 255.0f, 165f / 255f, 0f);
+
+    /* ビルド時に必要なフォルダが変わる可能性を考えたが、streamingAssetsPathで大丈夫っぽい...?
+    #if UNITY_EDITOR
+        private readonly string DataBasePath = Application.streamingAssetsPath + @"\spells.db";
+    #elif UNITY_STANDALONE
+        private readonly string DataBasePath = @"C:\Users\extrme\Desktop\なにかてるかな_Data\StreamingAssets\spells.db";
+    #endif
+    */
+    private readonly string DataBasePath = Application.streamingAssetsPath + @"\spells.db";
 
     // Start is called before the first frame update
     void Start()
     {
         BattleSet();
         QRreadinfo.SetActive(false);
+        magictext.SetActive(false);
         ContinueGame = true;
         HP[0].text = (Player.hpmax).ToString()+" / "+(Player.hpmax).ToString();
         HP[1].text = (Enemy.hpmax).ToString()+" / "+(Enemy.hpmax).ToString();
@@ -47,6 +58,8 @@ public class BattleSystem : MonoBehaviour
     {
         Player.hpmax = 18004;
         Player.name = "Blue";
+        Player.at = 5000;
+        Enemy.at = 3000;
         switch (Button.level)
         {
             case 1:
@@ -60,6 +73,8 @@ public class BattleSystem : MonoBehaviour
             case 3:
                 Enemy.hpmax = int.MaxValue;
                 Enemy.name = "コープスソウル";
+                Enemy.at = 5000;
+                Player.at = 500000000;
                 break;
             case 4:
                 Enemy.hpmax = 18004;
@@ -72,18 +87,16 @@ public class BattleSystem : MonoBehaviour
 
     IEnumerator battle()
     {
-        yield return new WaitForSeconds(1f);
         while (ContinueGame)
         {
             yield return Player_action();
 
             if (Enemy.hp <= 0)
             {
-                battlelog.text = Player.name + " win!";
                 ContinueGame = false;
                 yield break;
             }
-
+            yield return new WaitForSeconds(0.4f);
             if (Button.level == 4)
             {
                 yield return Player2_action();
@@ -93,27 +106,29 @@ public class BattleSystem : MonoBehaviour
                 yield return Enemy_action();
             }
 
+
             if (Player.hp <= 0)
             {
                 if (Button.level == 4)
                 {
-                    battlelog.text = Enemy.name + " win!";
+                    
                 }
                 else
                 {
-                    battlelog.text = Player.name + " lose...";
+                    
                 }
                 ContinueGame = false;
                 yield break;
             }
-
-
         }
         yield break;
     }
     IEnumerator Player_action()
     {
-        battlelog.text = "Blueのターン";
+        
+
+        HP[0].color = MyOrange;
+        HP[1].color = Color.white;
 
         QRreadinfo.SetActive(true);
 
@@ -123,24 +138,27 @@ public class BattleSystem : MonoBehaviour
         {
             yield return null;
         }
-        var MagickSkill = new NewTowelExtendedMagicSkill(code, false, "Fire", Application.streamingAssetsPath + "/spells.db");
+        var MagickSkill = new NewTowelExtendedMagicSkill(code, 3, "FIRE", DataBasePath);
+        
+        magictext.SetActive(true);
+        magictext.GetComponent<Text>().text = (MagickSkill.Spell1 + "." + MagickSkill.Spell2);
 
         Debug.Log("QR code is :" + code);
 
         QRreadinfo.SetActive(false);
 
-        Enemy.Ondamage(Player.Magic(Player.at));
+        yield return Enemy.Ondamage(Player.Magic(Player.at));
         HP[1].text = (Enemy.hp).ToString()+" / "+(Enemy.hpmax).ToString();
-        yield return new WaitForSeconds(1f);
-
-        
+        magictext.SetActive(false);
         yield break;
     }
 
 
     IEnumerator Player2_action()
     {
-        battlelog.text = "Greenのターン";
+        
+        HP[0].color = Color.white;
+        HP[1].color = MyOrange;
         QRreadinfo.SetActive(true);
 
         string code;
@@ -149,28 +167,35 @@ public class BattleSystem : MonoBehaviour
         {
             yield return null;
         }
-        var MagickSkill = new NewTowelExtendedMagicSkill(code, false, "Fire", Application.streamingAssetsPath + "/spells.db");
+        var MagickSkill = new NewTowelExtendedMagicSkill(code, 3, "FIRE", DataBasePath);
+        
+        magictext.SetActive(true);
+        magictext.GetComponent<Text>().text = (MagickSkill.Spell1 + "." + MagickSkill.Spell2);
 
         Debug.Log("QR code is :" + code);
 
         QRreadinfo.SetActive(false);
 
-        Player.Ondamage(Enemy.Magic(Enemy.at));
+        yield return Player.Ondamage(Enemy.Magic(Enemy.at));
         HP[0].text = (Player.hp).ToString() + " / " + (Player.hpmax).ToString();
-        yield return new WaitForSeconds(1f);
-
+        magictext.SetActive(false);
         yield break;
     }
 
     IEnumerator Enemy_action()
     {
-        battlelog.text = "Enemyのターン";
-        yield return new WaitForSeconds(1f);
+        
+        HP[1].color = MyOrange;
+        HP[0].color = Color.white;
 
-        Player.Ondamage(Enemy.Magic(Enemy.at));
+        var MagickSkill = new NewTowelExtendedMagicSkill("hello world", 3, "FIRE", DataBasePath);
+        
+        magictext.SetActive(true);
+        magictext.GetComponent<Text>().text = (MagickSkill.Spell1 + "." + MagickSkill.Spell2);
+
+        yield return Player.Ondamage(Enemy.Magic(Enemy.at));
         HP[0].text = (Player.hp).ToString()+" / "+(Player.hpmax).ToString();
-        yield return new WaitForSeconds(1f);
-       
+        magictext.SetActive(false);
         yield break;
     }
 

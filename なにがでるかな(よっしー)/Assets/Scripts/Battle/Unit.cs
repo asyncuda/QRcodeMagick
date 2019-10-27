@@ -11,11 +11,9 @@ public class Unit : MonoBehaviour
     public GameObject DamageText;
     public GameObject DamageEffect;
 
-
     // Start is called before the first frame update
     void Start()
     {
-       
     }
 
     // Update is called once per frame
@@ -24,27 +22,56 @@ public class Unit : MonoBehaviour
         
     }
 
-    public void Ondamage(int damage)
+    public IEnumerator Ondamage(int damage)
     {
         hp -= damage;
         if (hp <= 0)
         {
             hp = 0;
         }
-        Instantiate(DamageText, new Vector3(transform.position.x,transform.position.y-1f, 0), transform.rotation).GetComponent<TextMesh>().text = damage.ToString();
 
         ParticleSystem ps = Instantiate(
-            DamageEffect,
-            new Vector3(transform.position.x, transform.position.y, 100), 
-            transform.rotation
-            ).GetComponent<ParticleSystem>();
+                 DamageEffect,
+                 new Vector3(-transform.position.x, transform.position.y),
+                 transform.rotation
+                 ).GetComponent<ParticleSystem>();
+
+        ps.Stop();
 
         var main = ps.main;
         var trans = ps.transform;
+        main.duration = 1.8f;
         main.scalingMode = ParticleSystemScalingMode.Hierarchy;
-        trans.localScale = new Vector3(10, 10, 10);
 
         ps.Play();
+
+        float goalx = this.transform.position.x;
+        float progress = (goalx - ps.transform.position.x) / 30f;
+
+        float max_scale = 10;
+        for (float i = 1; i <= max_scale; i += (max_scale / 60))
+        {
+            trans.localScale = new Vector3(i, i, i);
+            yield return null;
+        }
+
+        while (Mathf.Abs(goalx - ps.transform.position.x) > 0.1)
+        {
+            ps.transform.position = new Vector3(ps.transform.position.x + progress, ps.transform.position.y);
+            yield return null;
+        }
+
+        while (ps.isPlaying == true)
+        {
+            yield return null;
+        }
+
+        Instantiate(DamageText, new Vector3(transform.position.x, transform.position.y - 1f, 0), transform.rotation).GetComponent<TextMesh>().text = damage.ToString();
+
+        yield return new WaitForSeconds(1f);
+
+        yield break;
+
     }
 
     public int Magic(int attack)
