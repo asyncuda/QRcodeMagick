@@ -138,7 +138,7 @@ namespace QRCodeTranslator
             string subHash = hash.Substring(21, 7);
 
             //通常の最小・最大攻撃力
-            (int min, int max) powers = (min: 100, max: 10 ^ 4);
+            (int min, int max) powers = (min: 1000, max: 10 ^ 4);
 			
 			//分割したハッシュ文字列をpowers.min以上powers.max以下に変換
 			int power = (Convert.ToInt32(subHash, 16) % (powers.max + 1 - powers.min)) + powers.min;
