@@ -11,10 +11,6 @@ public class Unit : MonoBehaviour
     public GameObject DamageText;
     public GameObject DamageEffect;
 
-
-    bool turn = true;
-
-
     // Start is called before the first frame update
     void Start()
     {
