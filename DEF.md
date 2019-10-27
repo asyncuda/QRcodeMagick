@@ -64,7 +64,7 @@
 |:---:|--------:|:---:|:---------:|
 |コープスソウル　　 | <img src="img/character0.png" width=70> | 2147483647 | 上級 |
 |パンプキントーテム | <img src="img/character1.png" width=70> | 65535      | 中級 |
-
+|ほうきおばけ | <img src="img/character2.png" width=70> | 32767      | 初級 |
 <div style="page-break-before:always"></div>
 
 # 魔法

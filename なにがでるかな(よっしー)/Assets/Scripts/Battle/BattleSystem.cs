@@ -130,6 +130,9 @@ public class BattleSystem : MonoBehaviour
         HP[0].color = MyOrange;
         HP[1].color = Color.white;
 
+        HP[0].color = MyOrange;
+        HP[1].color = Color.white;
+
         QRreadinfo.SetActive(true);
 
         string code;
@@ -139,7 +142,7 @@ public class BattleSystem : MonoBehaviour
             yield return null;
         }
         var MagickSkill = new NewTowelExtendedMagicSkill(code, 3, "FIRE", DataBasePath);
-        
+
         magictext.SetActive(true);
         magictext.GetComponent<Text>().text = (MagickSkill.Spell1 + "." + MagickSkill.Spell2);
 
@@ -149,14 +152,13 @@ public class BattleSystem : MonoBehaviour
 
         yield return Enemy.Ondamage(Player.Magic(Player.at));
         HP[1].text = (Enemy.hp).ToString()+" / "+(Enemy.hpmax).ToString();
-        magictext.SetActive(false);
+
         yield break;
     }
 
 
     IEnumerator Player2_action()
     {
-        
         HP[0].color = Color.white;
         HP[1].color = MyOrange;
         QRreadinfo.SetActive(true);
@@ -168,7 +170,7 @@ public class BattleSystem : MonoBehaviour
             yield return null;
         }
         var MagickSkill = new NewTowelExtendedMagicSkill(code, 3, "FIRE", DataBasePath);
-        
+
         magictext.SetActive(true);
         magictext.GetComponent<Text>().text = (MagickSkill.Spell1 + "." + MagickSkill.Spell2);
 
@@ -178,13 +180,14 @@ public class BattleSystem : MonoBehaviour
 
         yield return Player.Ondamage(Enemy.Magic(Enemy.at));
         HP[0].text = (Player.hp).ToString() + " / " + (Player.hpmax).ToString();
+
         magictext.SetActive(false);
+
         yield break;
     }
 
     IEnumerator Enemy_action()
-    {
-        
+    {   
         HP[1].color = MyOrange;
         HP[0].color = Color.white;
 
@@ -196,6 +199,7 @@ public class BattleSystem : MonoBehaviour
         yield return Player.Ondamage(Enemy.Magic(Enemy.at));
         HP[0].text = (Player.hp).ToString()+" / "+(Player.hpmax).ToString();
         magictext.SetActive(false);
+
         yield break;
     }
 
