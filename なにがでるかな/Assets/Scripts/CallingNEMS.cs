@@ -10,10 +10,10 @@ public class CallingNEMS : MonoBehaviour
     void Start()
     {
 		//引数：string QRコードの文字列、int 挑戦するコース、string 敵の属性、string データベースのパス
-		var nems = new NewTowelExtendedMagicSkill("qrCodeString", 3, "FIRE", Application.streamingAssetsPath+"/spells.db");
+		var nems = new NewTowelExtendedMagicSkill("qrCodeString", Application.streamingAssetsPath+"/spells.db");
 		OutPut(nems);
 
-		var nems2 = new NewTowelExtendedMagicSkill("hoge", 1, null, Application.streamingAssetsPath + "/spells.db");
+		var nems2 = new NewTowelExtendedMagicSkill("hoge", Application.streamingAssetsPath + "/spells.db");
 		OutPut(nems2);
 	}
 
