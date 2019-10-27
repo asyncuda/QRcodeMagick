@@ -13,7 +13,8 @@ public class BattleSystem : MonoBehaviour
     public GameObject QRreadinfo;//QRをよみこませてね！のやつ
     public GameObject magictext;
 
-    
+    public static string WinnerName;
+    public static int countTurn=1;
 
     private QRReader qr;
 
@@ -93,8 +94,9 @@ public class BattleSystem : MonoBehaviour
 
             if (Enemy.hp <= 0)
             {
+                WinnerName = Player.name;
                 yield return new WaitForSeconds(1f);
-                //SceneManager.LoadScene("");
+                SceneManager.LoadScene("GameOverScene");
                 
                 yield break;
             }
@@ -113,17 +115,20 @@ public class BattleSystem : MonoBehaviour
             {
                 if (Button.level == 4)
                 {
+                    WinnerName = Enemy.name;
                     yield return new WaitForSeconds(1f);
-                    //SceneManager.LoadScene("");ゲームエンドシーンお願いします
+                    SceneManager.LoadScene("GameOverScene");
                 }
                 else
                 {
+                    WinnerName = Enemy.name;
                     yield return new WaitForSeconds(1f);
-                    //SceneManager.LoadScene("");ゲームエンドシーンお願いします
+                    SceneManager.LoadScene("GameOverScene");
                 }
                 
                 yield break;
             }
+            countTurn += 1;
         }
     }
     IEnumerator Player_action()
