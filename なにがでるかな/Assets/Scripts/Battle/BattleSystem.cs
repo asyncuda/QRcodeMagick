@@ -1,9 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using QRCodeTranslator;
+using MagickSkill = QRCodeTranslator.NewTowelExtendedMagicSkill;
+
 
 public class BattleSystem : MonoBehaviour
 {
@@ -52,8 +55,6 @@ public class BattleSystem : MonoBehaviour
     {
         Player.hpmax = 18004;
         Player.name = "Blue";
-        Player.at = 5000;
-        Enemy.at = 3000;
         switch (Button.level)
         {
             case 1:
@@ -67,8 +68,6 @@ public class BattleSystem : MonoBehaviour
             case 3:
                 Enemy.hpmax = int.MaxValue;
                 Enemy.name = "コープスソウル";
-                Enemy.at = 5000;
-                //Player.at = 500000000;
                 break;
             case 4:
                 Enemy.hpmax = 18004;
@@ -93,7 +92,9 @@ public class BattleSystem : MonoBehaviour
 
                 yield break;
             }
+
             yield return new WaitForSeconds(0.4f);
+
             if (Button.level == 4)
             {
                 yield return Player2_action();
@@ -131,23 +132,22 @@ public class BattleSystem : MonoBehaviour
         {
             yield return null;
         }
-        var MagickSkill = new NewTowelExtendedMagicSkill(code, DataBasePath);
+        var ms = new NewTowelExtendedMagicSkill(code, DataBasePath);
 
         magictext.SetActive(true);
-        magictext.GetComponent<Text>().text = (MagickSkill.Spell1 + "." + MagickSkill.Spell2);
+        magictext.GetComponent<Text>().text = (ms.Spell1 + "." + ms.Spell2);
 
         Debug.Log("QR code is :" + code);
 
         QRreadinfo.SetActive(false);
 
-        yield return Enemy.Ondamage(Player.Magic(MagickSkill.Power, Button.level, Player.Attribute, Enemy.Attribute));
+        yield return AttackAndEffect(Player, Enemy, ms, Button.level);
+
         HP[1].text = (Enemy.name).ToString()+"\n"+(Enemy.hp).ToString()+" / "+(Enemy.hpmax).ToString();
         magictext.SetActive(false);
 
         yield break;
     }
-
-
     IEnumerator Player2_action()
     {
         HP[0].color = Color.white;
@@ -160,17 +160,17 @@ public class BattleSystem : MonoBehaviour
         {
             yield return null;
         }
-        var MagickSkill = new NewTowelExtendedMagicSkill(code, DataBasePath);
+        var ms = new NewTowelExtendedMagicSkill(code, DataBasePath);
 
         magictext.SetActive(true);
-        magictext.GetComponent<Text>().text = (MagickSkill.Spell1 + "." + MagickSkill.Spell2);
+        magictext.GetComponent<Text>().text = (ms.Spell1 + "." + ms.Spell2);
 
         Debug.Log("QR code is :" + code);
 
         QRreadinfo.SetActive(false);
 
-        // Player側のレベルは1だよね
-        yield return Player.Ondamage(Enemy.Magic(MagickSkill.Power, 1, MagickSkill.Attribute, Player.Attribute));
+        yield return AttackAndEffect(Enemy, Player, ms);
+
         HP[0].text = (Player.name).ToString()+"\n"+(Player.hp).ToString() + " / " + (Player.hpmax).ToString();
 
         magictext.SetActive(false);
@@ -183,17 +183,25 @@ public class BattleSystem : MonoBehaviour
         HP[1].color = MyOrange;
         HP[0].color = Color.white;
 
-        var MagickSkill = new NewTowelExtendedMagicSkill("hello world", DataBasePath);
-        
-        magictext.SetActive(true);
-        magictext.GetComponent<Text>().text = (MagickSkill.Spell1 + "." + MagickSkill.Spell2);
+        var ms = new NewTowelExtendedMagicSkill(DateTime.Now.ToString(), DataBasePath);
 
-        // Player側のレベルは1だよね
-        yield return Player.Ondamage(Enemy.Magic(MagickSkill.Power, 1, MagickSkill.Attribute, Player.Attribute));
+        magictext.SetActive(true);
+        magictext.GetComponent<Text>().text = (ms.Spell1 + "." + ms.Spell2);
+
+        yield return AttackAndEffect(Enemy, Player, ms);
+
         HP[0].text = (Player.name).ToString()+"\n"+(Player.hp).ToString()+" / "+(Player.hpmax).ToString();
         magictext.SetActive(false);
 
         yield break;
+    }
+
+    IEnumerator AttackAndEffect(Unit Attacker, Unit Opponent, MagickSkill ms, int level = 1)
+    {
+        yield return Attacker.MagicEffect(ms.Power, ms.Attribute);
+        int damage = Attacker.Magic(ms.Power, level, ms.Attribute, Opponent.Attribute);
+        Opponent.Ondamage(damage);
+        yield return Opponent.OndamageEffect(damage);
     }
 
 

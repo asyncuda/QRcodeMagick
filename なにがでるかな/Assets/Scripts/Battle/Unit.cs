@@ -5,102 +5,46 @@ using UnityEngine.UI;
 
 public class Unit : MonoBehaviour
 {
-    public int hp=1;
-    public int hpmax = 500;
+    public int hp;
+    public int hpmax;
 
     public string Attribute;
 
-    [SerializeField]public int at = 1200;
-
     public GameObject DamageText;
+
     public GameObject DamageEffect;
 
-    public GameObject[] DamageEffectList = new GameObject[2];
-
     // Start is called before the first frame update
-    void Start()
-    {
-    }
+    void Start() { }
 
     // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    void Update() { }
 
-    public IEnumerator Ondamage(int damage)
+    public void Ondamage(int damage)
     {
         hp -= damage;
         if (hp <= 0)
         {
             hp = 0;
         }
+    }
 
+    public int Magic(int power, int level, string at_attr, string def_attr)
+    {
+        return (int)(power * (SelectLevel(level) * CompAttr(at_attr, def_attr)));
+    }
+
+    public IEnumerator OndamageEffect(int damage)
+    {
         Instantiate(DamageText, new Vector3(transform.position.x, transform.position.y - 1f, 0), transform.rotation).GetComponent<TextMesh>().text = damage.ToString();
 
         yield return new WaitForSeconds(1f);
     }
-    public IEnumerator EffectMoving(int code)
+
+    public IEnumerator MagicEffect(int power, string attr)
     {
-        DamageEffect = DamageEffectList[code % DamageEffectList.Length];
-
-        ParticleSystem ps = Instantiate(
-                 DamageEffect,
-                 new Vector3(transform.position.x, transform.position.y),
-                 transform.rotation
-                 ).GetComponent<ParticleSystem>();
-
-        ps.Stop();
-
-        var main = ps.main;
-        var trans = ps.transform;
-        main.duration = 1.8f;
-        main.scalingMode = ParticleSystemScalingMode.Hierarchy;
-
-        ps.Play();
-
-        float goalx = -this.transform.position.x;
-        float progress = (goalx - ps.transform.position.x) / 30f;
-
-        float max_scale = 10;
-        for (float i = 1; i <= max_scale; i += (max_scale / 60))
-        {
-            trans.localScale = new Vector3(i, i, i);
-            yield return null;
-        }
-
-        while (Mathf.Abs(goalx - ps.transform.position.x) > 0.1)
-        {
-            ps.transform.position = new Vector3(ps.transform.position.x + progress, ps.transform.position.y);
-            yield return null;
-        }
-
-        while (ps.isPlaying == true)
-        {
-            yield return null;
-        }
-
-        yield return null;
-
-        /*
-        IEnumerator Attack()
-        {
-            yield break;
-        }
-
-        IEnumerator Heel()
-        {
-            yield break;
-        }
-        */
-    }
-    public int Magic(int power, int level, string at_attr, string def_attr)
-    {
-
-
-        StartCoroutine(EffectMoving(power));
-
-        return (int)(power * (SelectLevel(level) * CompAttr(at_attr, def_attr)));
+        yield return Heel(DamageEffect, this.transform.position, power);
+        //yield return Shot(DamageEffect, this.transform.position, this.transform.position * Vector2.left, power);
     }
 
     private float SelectLevel(int level)
@@ -136,4 +80,62 @@ public class Unit : MonoBehaviour
         }
         else return 1.0f;
     }
+
+    public void MainConfig(out ParticleSystem.MainModule main)
+    {
+        main.duration = 2.0f;
+        main.scalingMode = ParticleSystemScalingMode.Hierarchy;
+    }
+
+    public IEnumerator Heel(GameObject effect, Vector2 target, int power)
+    {
+        GameObject obj = Instantiate(effect);
+        ParticleSystem ps = obj.GetComponent<ParticleSystem>();
+
+        ps.Stop();
+
+        ps.transform.position = target;
+        var main = ps.main; MainConfig(out main);
+
+        ps.Play();
+
+        while (ps.isPlaying) yield return null;
+
+        Destroy(obj);
+    }
+
+    public IEnumerator Shot(GameObject effect, Vector2 from, Vector2 to, int power)
+    {
+        GameObject obj = Instantiate(effect);
+        ParticleSystem ps = obj.GetComponent<ParticleSystem>();
+
+        ps.Stop();
+
+        ps.transform.position = from;
+        var main = ps.main; MainConfig(out main);
+
+        ps.Play();
+
+        // ギュイーンと貯めてエフェクト拡大
+        ps.transform.localScale = Vector3.one;
+        for (int i = 0; i < 60; i++)
+        {
+            // one is 単位ベクトル(1, 1, 1)
+            ps.transform.localScale += Vector3.one / 60;
+            yield return null;
+        }
+
+        // ドーンと放つ(等速直線運動)
+        Vector3 go = (to - from) / 30.0f;
+        while (Vector3.Distance(to, ps.transform.position) > 0.1f)
+        {
+            ps.transform.position += go;
+            yield return null;
+        }
+
+        // エフェクトの終了を待つ
+        while (ps.isPlaying) yield return null;
+
+        Destroy(obj);
+    } 
 }

@@ -1189,7 +1189,7 @@ MonoBehaviour:
   at: 0
   DamageText: {fileID: 9103829435579478778, guid: 95016d75495a48149840889903663361,
     type: 3}
-  DamageEffect: {fileID: 100006, guid: 906ef3748a66347cfb2d72de10092732, type: 3}
+  DamageEffect: {fileID: 100006, guid: bcf46e46336114145b09deb1db11d480, type: 3}
 --- !u!1 &1766817534
 GameObject:
   m_ObjectHideFlags: 0
