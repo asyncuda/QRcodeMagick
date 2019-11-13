@@ -1186,10 +1186,13 @@ MonoBehaviour:
   hp: 1
   hpmax: 500
   Attribute: 
-  at: 0
   DamageText: {fileID: 9103829435579478778, guid: 95016d75495a48149840889903663361,
     type: 3}
-  DamageEffect: {fileID: 100006, guid: bcf46e46336114145b09deb1db11d480, type: 3}
+  _Fire: {fileID: 100004, guid: 6836f5eaa96f845c4ac0909f84272556, type: 3}
+  _Water: {fileID: 100006, guid: 44dd4fdbb6f10429a844c51183a4c84e, type: 3}
+  _Plant: {fileID: 100006, guid: 906ef3748a66347cfb2d72de10092732, type: 3}
+  _Ground: {fileID: 100010, guid: 4d0391f078db24fac9f5cba3075f9f5d, type: 3}
+  _Heel: {fileID: 2960361032965324149, guid: 02f774417032dfc4e83f8017bc9f5d9b, type: 3}
 --- !u!1 &1766817534
 GameObject:
   m_ObjectHideFlags: 0
@@ -1224,10 +1227,13 @@ MonoBehaviour:
   hp: 1
   hpmax: 65535
   Attribute: 
-  at: 1200
   DamageText: {fileID: 9103829435579478778, guid: 95016d75495a48149840889903663361,
     type: 3}
-  DamageEffect: {fileID: 100006, guid: bcf46e46336114145b09deb1db11d480, type: 3}
+  _Fire: {fileID: 100004, guid: 6836f5eaa96f845c4ac0909f84272556, type: 3}
+  _Water: {fileID: 100006, guid: 44dd4fdbb6f10429a844c51183a4c84e, type: 3}
+  _Plant: {fileID: 100006, guid: 906ef3748a66347cfb2d72de10092732, type: 3}
+  _Ground: {fileID: 100010, guid: 4d0391f078db24fac9f5cba3075f9f5d, type: 3}
+  _Heel: {fileID: 2960361032965324149, guid: 02f774417032dfc4e83f8017bc9f5d9b, type: 3}
 --- !u!114 &1766817536
 MonoBehaviour:
   m_ObjectHideFlags: 0

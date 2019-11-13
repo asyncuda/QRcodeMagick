@@ -30,10 +30,11 @@ public class BattleSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        countTurn = 1;
         BattleSet();
         QRreadinfo.SetActive(false);
         magictext.SetActive(false);
-        
+
         HP[0].text = (Player.name).ToString()+"\n"+(Player.hpmax).ToString()+" / "+(Player.hpmax).ToString();
         HP[1].text = (Enemy.name).ToString()+"\n"+(Enemy.hpmax).ToString()+" / "+(Enemy.hpmax).ToString();
 
@@ -59,14 +60,17 @@ public class BattleSystem : MonoBehaviour
         {
             case 1:
                 Enemy.hpmax = short.MaxValue;
+                Enemy.Attribute = "";
                 Enemy.name = "ほうきおばけ";
                 break;
             case 2:
                 Enemy.hpmax = ushort.MaxValue;
+                Enemy.Attribute = "PLANT";
                 Enemy.name = "パンプキントーテム";
                 break;
             case 3:
                 Enemy.hpmax = int.MaxValue;
+                Enemy.Attribute = "FIRE";
                 Enemy.name = "コープスソウル";
                 break;
             case 4:
@@ -196,7 +200,7 @@ public class BattleSystem : MonoBehaviour
         yield break;
     }
 
-    IEnumerator AttackAndEffect(Unit Attacker, Unit Opponent, MagickSkill ms, int level = 1)
+    IEnumerator AttackAndEffect(Unit Attacker, Unit Opponent, MagickSkill ms, int level = 4)
     {
         yield return Attacker.MagicEffect(ms.Power, ms.Attribute);
         int damage = Attacker.Magic(ms.Power, level, ms.Attribute, Opponent.Attribute);

@@ -6,16 +6,28 @@ using UnityEngine.UI;
 public class Unit : MonoBehaviour
 {
     public int hp;
+
     public int hpmax;
 
     public string Attribute;
 
     public GameObject DamageText;
 
-    public GameObject DamageEffect;
-
     // Start is called before the first frame update
-    void Start() { }
+    void Start()
+    {
+        QrMagickEffect.Add("FIRE", new ParticleAnimation(_Fire, Color.red));
+        QrMagickEffect.Add("WATER", new ParticleAnimation(_Water, Color.blue));
+        QrMagickEffect.Add("PLANT", new ParticleAnimation(_Plant, Color.green));
+        QrMagickEffect.Add("GROUND", new ParticleAnimation(_Ground, Color.yellow));
+        QrMagickEffect.Add("HEEL", new ParticleAnimation(_Heel, Color.green));
+
+        QrMagickEffect["FIRE"].Effect = QrMagickEffect["FIRE"].Shot;
+        QrMagickEffect["WATER"].Effect = QrMagickEffect["WATER"].Shot;
+        QrMagickEffect["PLANT"].Effect = QrMagickEffect["PLANT"].Shot;
+        QrMagickEffect["GROUND"].Effect = QrMagickEffect["GROUND"].Meteo;
+        QrMagickEffect["HEEL"].Effect = QrMagickEffect["HEEL"].Heel;
+    }
 
     // Update is called once per frame
     void Update() { }
@@ -41,21 +53,25 @@ public class Unit : MonoBehaviour
         yield return new WaitForSeconds(1f);
     }
 
-    public IEnumerator MagicEffect(int power, string attr)
+    public IEnumerator MagicEffect(int power, string magickattr)
     {
-        yield return Heel(DamageEffect, this.transform.position, power);
-        //yield return Shot(DamageEffect, this.transform.position, this.transform.position * Vector2.left, power);
+        yield return null;
+//        yield return QrMagickEffect["FIRE"].Shot(this.transform.position, this.transform.position * Vector2.left, power);
     }
 
     private float SelectLevel(int level)
     {
+        float game_speed = 3.0f;
+        float level_power = 0.0f;
         switch (level)
         {
-            case 1: return 1.0f;
-            case 2: return 1.5f;
-            case 3: return 50000f;
-            default: return 1.0f;
+            case 1: level_power = 1.2f * (float)short.MaxValue / 18004f; break;
+            case 2: level_power = 0.9f * (float)ushort.MaxValue / 18004f; break;
+            case 3: level_power = 0.7f * (float)int.MaxValue / 18004f; break;
+            default: level_power = 1.0f; break;
         }
+
+        return game_speed * level_power;
     }
 
     private float CompAttr(string attack, string defence)
@@ -81,61 +97,15 @@ public class Unit : MonoBehaviour
         else return 1.0f;
     }
 
-    public void MainConfig(out ParticleSystem.MainModule main)
-    {
-        main.duration = 2.0f;
-        main.scalingMode = ParticleSystemScalingMode.Hierarchy;
-    }
+    private Dictionary<string, ParticleAnimation> QrMagickEffect = new Dictionary<string, ParticleAnimation>(); 
 
-    public IEnumerator Heel(GameObject effect, Vector2 target, int power)
-    {
-        GameObject obj = Instantiate(effect);
-        ParticleSystem ps = obj.GetComponent<ParticleSystem>();
+    [SerializeField] private GameObject _Fire;
 
-        ps.Stop();
+    [SerializeField] private GameObject _Water;
 
-        ps.transform.position = target;
-        var main = ps.main; MainConfig(out main);
+    [SerializeField] private GameObject _Plant;
 
-        ps.Play();
+    [SerializeField] private GameObject _Ground;
 
-        while (ps.isPlaying) yield return null;
-
-        Destroy(obj);
-    }
-
-    public IEnumerator Shot(GameObject effect, Vector2 from, Vector2 to, int power)
-    {
-        GameObject obj = Instantiate(effect);
-        ParticleSystem ps = obj.GetComponent<ParticleSystem>();
-
-        ps.Stop();
-
-        ps.transform.position = from;
-        var main = ps.main; MainConfig(out main);
-
-        ps.Play();
-
-        // ギュイーンと貯めてエフェクト拡大
-        ps.transform.localScale = Vector3.one;
-        for (int i = 0; i < 60; i++)
-        {
-            // one is 単位ベクトル(1, 1, 1)
-            ps.transform.localScale += Vector3.one / 60;
-            yield return null;
-        }
-
-        // ドーンと放つ(等速直線運動)
-        Vector3 go = (to - from) / 30.0f;
-        while (Vector3.Distance(to, ps.transform.position) > 0.1f)
-        {
-            ps.transform.position += go;
-            yield return null;
-        }
-
-        // エフェクトの終了を待つ
-        while (ps.isPlaying) yield return null;
-
-        Destroy(obj);
-    } 
+    [SerializeField] private GameObject _Heel;
 }
