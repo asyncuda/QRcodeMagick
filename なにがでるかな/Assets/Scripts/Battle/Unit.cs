@@ -16,19 +16,7 @@ public class Unit : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        QrMagickEffect.Add("FIRE", new ParticleAnimation(_Fire, Color.red));
-        QrMagickEffect.Add("WATER", new ParticleAnimation(_Water, Color.blue));
-        QrMagickEffect.Add("PLANT", new ParticleAnimation(_Plant, Color.green));
-        QrMagickEffect.Add("GROUND", new ParticleAnimation(_Ground, Color.yellow));
-        QrMagickEffect.Add("HEEL", new ParticleAnimation(_Heel, Color.green));
-
-        QrMagickEffect["FIRE"].Effect = QrMagickEffect["FIRE"].Shot;
-        QrMagickEffect["WATER"].Effect = QrMagickEffect["WATER"].Shot;
-        QrMagickEffect["PLANT"].Effect = QrMagickEffect["PLANT"].Shot;
-        QrMagickEffect["GROUND"].Effect = QrMagickEffect["GROUND"].Meteo;
-        QrMagickEffect["HEEL"].Effect = QrMagickEffect["HEEL"].Heel;
     }
-
     // Update is called once per frame
     void Update() { }
 
@@ -55,8 +43,23 @@ public class Unit : MonoBehaviour
 
     public IEnumerator MagicEffect(int power, string magickattr)
     {
-        yield return null;
-//        yield return QrMagickEffect["FIRE"].Shot(this.transform.position, this.transform.position * Vector2.left, power);
+        Debug.Log(magickattr);
+        if (magickattr == "FIRE")
+        {
+            yield return Shot(_Fire, this.transform.position, this.transform.position * Vector2.left, power);
+        }
+        else if (magickattr == "WATER")
+        {
+            yield return Shot(_Water, this.transform.position, this.transform.position * Vector2.left, power);
+        }
+        else if (magickattr == "PLANT")
+        {
+            yield return Shot(_Plant, this.transform.position, this.transform.position * Vector2.left, power);
+        }
+        else if (magickattr == "GROUND")
+        {
+            yield return Shot(_Ground, this.transform.position, this.transform.position * Vector2.left, power);
+        }
     }
 
     private float SelectLevel(int level)
@@ -97,7 +100,48 @@ public class Unit : MonoBehaviour
         else return 1.0f;
     }
 
-    private Dictionary<string, ParticleAnimation> QrMagickEffect = new Dictionary<string, ParticleAnimation>(); 
+    private void MainConfig(out ParticleSystem.MainModule main)
+    {
+        main.duration = 2.0f;
+        main.scalingMode = ParticleSystemScalingMode.Hierarchy;
+    }
+
+    public IEnumerator Shot(GameObject ParticleObj, Vector2 from, Vector2 to, int power)
+    {
+        GameObject obj = Instantiate(ParticleObj);
+        ParticleSystem ps = obj.GetComponent<ParticleSystem>();
+
+        ps.Stop();
+
+        var main = ps.main; MainConfig(out main);
+        ps.transform.position = from;
+
+        ps.Play();
+
+        // ギュイーンと貯めてエフェクト拡大
+        ps.transform.localScale = Vector3.one;
+        for (int i = 0; i < 60; i++)
+        {
+            // Vector3.one is 単位ベクトル(1, 1, 1)
+            ps.transform.localScale += Vector3.one;
+
+            yield return null;
+        }
+
+        // ドーンと放つ(等速直線運動)
+        Vector3 go = (to - from) / 30.0f;
+        while (Vector3.Distance(to, ps.transform.position) > 0.1f)
+        {
+            ps.transform.position += go;
+            yield return null;
+        }
+
+        // エフェクトの終了を待つ
+        for (int time = 0; time < 60 && ps.isPlaying; time++) yield return null;
+
+        Destroy(obj);
+    }
+
 
     [SerializeField] private GameObject _Fire;
 
@@ -106,6 +150,4 @@ public class Unit : MonoBehaviour
     [SerializeField] private GameObject _Plant;
 
     [SerializeField] private GameObject _Ground;
-
-    [SerializeField] private GameObject _Heel;
 }
