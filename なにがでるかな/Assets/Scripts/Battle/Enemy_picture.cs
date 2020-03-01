@@ -29,22 +29,22 @@ public class Enemy_picture : MonoBehaviour
         if (Button.level == 1)
         {
             MainSpriteRenderer.sprite = BroomGhost;
-            this.transform.localScale = new Vector3(1, 1, 1);   
+            this.transform.localScale = new Vector3(0.5f, 0.5f, 1);   
         }
         if (Button.level == 2)
         {
             MainSpriteRenderer.sprite = PumpkinTotem;
-            this.transform.localScale = new Vector3(2, 2, 1);
+            this.transform.localScale = new Vector3(1, 1, 1);
         }
         if (Button.level == 3)
         {
             MainSpriteRenderer.sprite = CorpseSeoul;
-            this.transform.localScale = new Vector3(3, 3, 1);
+            this.transform.localScale = new Vector3(1.5f, 1.5f, 1);
         }
         if (Button.level == 4)
         {
             MainSpriteRenderer.sprite = green;
-            this.transform.localScale = new Vector3(1, 1, 1);
+            this.transform.localScale = new Vector3(0.5f, 0.5f, 1);
         }
     }
 }
