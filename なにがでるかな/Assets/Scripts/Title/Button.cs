@@ -47,11 +47,11 @@ public class Button : MonoBehaviour
 
     public void Highlighted()
     {
-        ChildText.GetComponent<Text>().color = Color.white;
+        ChildText.GetComponent<Text>().color = Color.yellow;
     }
     public void DisHighlighted()
     {
-        ChildText.GetComponent<Text>().color = Color.black;
+        ChildText.GetComponent<Text>().color = Color.white;
     }
 
     public void Level1()
