@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class Title : MonoBehaviour
 {
-    public GameObject single, multi, exit, level1, level2, level3;
+    public GameObject TitleLogo,single, multi, exit, level1, level2, level3;
 
     // Start is called before the first frame update
     void Start()
     {
-        single.SetActive(true);
-        multi.SetActive(true);
-        exit.SetActive(true);
+        TitleLogo.SetActive(true);
+        single.SetActive(false);
+        multi.SetActive(false);
+        exit.SetActive(false);
         level1.SetActive(false);
         level2.SetActive(false);
         level3.SetActive(false);
@@ -21,6 +22,14 @@ public class Title : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void ButtonAppear()
+    {
+        TitleLogo.SetActive(false);
+        single.SetActive(true);
+        multi.SetActive(true);
+        exit.SetActive(true);
     }
 
     public void buttonReset()

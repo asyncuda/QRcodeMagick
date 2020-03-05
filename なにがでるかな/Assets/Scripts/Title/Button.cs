@@ -26,6 +26,8 @@ public class Button : MonoBehaviour
         }
     }
 
+    
+
     public void Startsingle()
     {
         title.buttonReset();//ボタンをsingle,Multi選択からレベル設定へ変更します
