@@ -9,13 +9,13 @@ public class ParticleEnd : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        particle = this.GetComponent<particleSystem>();
+        particle = this.GetComponent<ParticleSystem>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(particle = isStopped)
+        if(particle.isStopped)
         {
             Destroy(this.gameObject);
         }
