@@ -20,10 +20,7 @@ public class Button : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.Escape))
-        {
-            Exit();
-        }
+        
     }
 
     
@@ -38,22 +35,15 @@ public class Button : MonoBehaviour
         SceneManager.LoadScene("Battle");
     }
 
-    public void Exit()
-    {
-#if UNITY_EDITOR
-    UnityEditor.EditorApplication.isPlaying = false;
-#elif UNITY_STANDALONE
-    UnityEngine.Application.Quit();
-#endif
-    }
+   
 
     public void Highlighted()
     {
-        ChildText.GetComponent<Text>().color = Color.white;
+        ChildText.GetComponent<Text>().color = Color.white; //ここエラーです
     }
     public void DisHighlighted()
     {
-        ChildText.GetComponent<Text>().color = Color.black;
+        ChildText.GetComponent<Text>().color = Color.black; //ここエラーです
     }
 
     public void Level1()

@@ -21,7 +21,10 @@ public class Title : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            Exit();
+        }
     }
 
     public void ButtonAppear()
@@ -40,5 +43,13 @@ public class Title : MonoBehaviour
         level1.SetActive(true);
         level2.SetActive(true);
         level3.SetActive(true);
+    }
+    public void Exit()
+    {
+#if UNITY_EDITOR
+    UnityEditor.EditorApplication.isPlaying = false;
+#elif UNITY_STANDALONE
+    UnityEngine.Application.Quit();
+#endif
     }
 }
