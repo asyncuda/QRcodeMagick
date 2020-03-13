@@ -3,7 +3,7 @@ using System.Text;
 using System.Data.SQLite;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
-
+using UnityEngine;
 namespace QRCodeTranslator
 {
 	/// <summary>
@@ -13,6 +13,8 @@ namespace QRCodeTranslator
     {
         //QRコード内の文字列のハッシュと、生成する呪文と属性と攻撃力
         private readonly string Hash;
+        //
+        private string databasePath = Application.streamingAssetsPath + "/spells.db";
 		/// <summary>
 		/// 呪文１
 		/// </summary>
@@ -40,7 +42,7 @@ namespace QRCodeTranslator
 		/// </summary>
 		/// <param name="qrString">QRコードの文字列</param>
 		/// <param name="databasePath">データベースへのパス</param>
-		public NewTowelExtendedMagicSkill(string qrString, string databasePath)
+		public NewTowelExtendedMagicSkill(string qrString)
         {
             //ハッシュ化
             Hash = EncryptQRString(qrString);
