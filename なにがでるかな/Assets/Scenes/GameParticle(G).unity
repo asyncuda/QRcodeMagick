@@ -482,5 +482,30 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7698026274207738222, guid: 1e2a685375d87124aa51b20f9d9c1942,
+        type: 3}
+      propertyPath: ShapeModule.type
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7698026274207738222, guid: 1e2a685375d87124aa51b20f9d9c1942,
+        type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7698026274207738222, guid: 1e2a685375d87124aa51b20f9d9c1942,
+        type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7698026274207738222, guid: 1e2a685375d87124aa51b20f9d9c1942,
+        type: 3}
+      propertyPath: ShapeModule.placementMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7698026274207738222, guid: 1e2a685375d87124aa51b20f9d9c1942,
+        type: 3}
+      propertyPath: ShapeModule.arc.value
+      value: 180
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1e2a685375d87124aa51b20f9d9c1942, type: 3}
