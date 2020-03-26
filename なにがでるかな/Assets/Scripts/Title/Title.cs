@@ -4,18 +4,12 @@ using UnityEngine;
 
 public class Title : MonoBehaviour
 {
-    public GameObject TitleLogo,single, multi, exit, level1, level2, level3;
+    public GameObject Title1, Title2, Title3,exit;//Title1=なにがでるかな、Title2=プレイ人数、Title3=難易度、exit=やめる
 
     // Start is called before the first frame update
     void Start()
     {
-        TitleLogo.SetActive(true);
-        single.SetActive(false);
-        multi.SetActive(false);
-        exit.SetActive(false);
-        level1.SetActive(false);
-        level2.SetActive(false);
-        level3.SetActive(false);
+        StartTitle();
     }
 
     // Update is called once per frame
@@ -27,22 +21,28 @@ public class Title : MonoBehaviour
         }
     }
 
-    public void ButtonAppear()
+    public void StartTitle()//なにがでるかな表示
     {
-        TitleLogo.SetActive(false);
-        single.SetActive(true);
-        multi.SetActive(true);
+        Title1.SetActive(true);
+        Title2.SetActive(false);
+        Title3.SetActive(false);
+        exit.SetActive(false);
+    }
+
+    public void ButtonAppear()//何人で遊ぶか表示
+    {
+        Title1.SetActive(false);
+        Title2.SetActive(true);
+        Title3.SetActive(false);
         exit.SetActive(true);
     }
 
-    public void buttonReset()
+    public void buttonReset()//難易度選択表示
     {
-        single.SetActive(false);
-        multi.SetActive(false);
-        exit.SetActive(false);
-        level1.SetActive(true);
-        level2.SetActive(true);
-        level3.SetActive(true);
+        Title1.SetActive(false);
+        Title2.SetActive(false);
+        Title3.SetActive(true);
+        exit.SetActive(true);
     }
     public void Exit()
     {
