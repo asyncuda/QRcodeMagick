@@ -1,7 +1,10 @@
 ---
 name: 新機能
 about: 欲しい機能の詳細です。
-labels: '機能追加'
+title: ''
+labels: 機能追加
+assignees: ''
+
 ---
 
 # 機能詳細
