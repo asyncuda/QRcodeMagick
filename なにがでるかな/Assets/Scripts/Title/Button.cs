@@ -9,7 +9,7 @@ public class Button : MonoBehaviour
     public Title title;
     public static int level; //Enemy_picture.csで参照します(1＝レベル : 2=レベル2 : 3=レベル3 : 4=Multi)
 
-    SpriteRenderer MainSpriteRenderer;//追加
+    private Image CurrentExitButton;
 
     public Sprite Onmouse;//追加
     public Sprite Nonmouse;//追加
@@ -17,7 +17,7 @@ public class Button : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        MainSpriteRenderer = gameObject.GetComponent<SpriteRenderer>();//追加
+        CurrentExitButton = gameObject.GetComponent<Image>();//追加
     }
 
     // Update is called once per frame
@@ -40,11 +40,11 @@ public class Button : MonoBehaviour
 
     public void Highlighted()
     {
-        MainSpriteRenderer.sprite = Onmouse;//変更した、変更の仕方は敵の画像を変えた時と同じ。Enemy_picuture.csと同じ。おそらくイベントトリガーの使い方を知らないからエラー
+        CurrentExitButton.sprite = Onmouse;//変更した、変更の仕方は敵の画像を変えた時と同じ。Enemy_picuture.csと同じ。おそらくイベントトリガーの使い方を知らないからエラー
     }
     public void DisHighlighted()
     {
-        MainSpriteRenderer.sprite = Nonmouse;//変更した
+        CurrentExitButton.sprite = Nonmouse;//変更した
     }
 
     public void Level1()
