@@ -9,22 +9,24 @@ public class Button : MonoBehaviour
     public Title title;
     public static int level; //Enemy_picture.csで参照します(1＝レベル : 2=レベル2 : 3=レベル3 : 4=Multi)
 
-    public GameObject ChildText;
+    private Image CurrentExitButton;
+
+    public Sprite Onmouse;//追加
+    public Sprite Nonmouse;//追加
 
     // Start is called before the first frame update
     void Start()
     {
-
+        CurrentExitButton = gameObject.GetComponent<Image>();//追加
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.Escape))
-        {
-            Exit();
-        }
+        
     }
+
+    
 
     public void Startsingle()
     {
@@ -36,22 +38,13 @@ public class Button : MonoBehaviour
         SceneManager.LoadScene("Battle");
     }
 
-    public void Exit()
-    {
-#if UNITY_EDITOR
-    UnityEditor.EditorApplication.isPlaying = false;
-#elif UNITY_STANDALONE
-    UnityEngine.Application.Quit();
-#endif
-    }
-
     public void Highlighted()
     {
-        ChildText.GetComponent<Text>().color = Color.yellow;
+        CurrentExitButton.sprite = Onmouse;//変更した、変更の仕方は敵の画像を変えた時と同じ。Enemy_picuture.csと同じ。おそらくイベントトリガーの使い方を知らないからエラー
     }
     public void DisHighlighted()
     {
-        ChildText.GetComponent<Text>().color = Color.white;
+        CurrentExitButton.sprite = Nonmouse;//変更した
     }
 
     public void Level1()
@@ -68,5 +61,20 @@ public class Button : MonoBehaviour
     {
         level = 3;
         SceneManager.LoadScene("Battle");
+    }
+   
+    public void ReturnTitle()
+    {
+        title.StartTitle();
+    }
+
+    public void ReturnSelectPlay()
+    {
+        title.ButtonAppear();
+    }
+    
+    public void PushExit()
+    {
+        title.Exit();
     }
 }
