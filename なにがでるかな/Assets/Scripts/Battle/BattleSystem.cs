@@ -4,9 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using QRCodeTranslator;
-using MagickSkill = QRCodeTranslator.NewTowelExtendedMagicSkill;
-
+using Magick;
 
 public class BattleSystem : MonoBehaviour
 {
@@ -136,10 +134,10 @@ public class BattleSystem : MonoBehaviour
         {
             yield return null;
         }
-        var ms = new NewTowelExtendedMagicSkill(code, DataBasePath);
+        var ms = new MagicSkill(code);
 
         magictext.SetActive(true);
-        magictext.GetComponent<Text>().text = (ms.Spell1 + "." + ms.Spell2);
+        magictext.GetComponent<Text>().text = (ms.Spell);
 
         Debug.Log("QR code is :" + code);
 
@@ -164,10 +162,10 @@ public class BattleSystem : MonoBehaviour
         {
             yield return null;
         }
-        var ms = new NewTowelExtendedMagicSkill(code, DataBasePath);
+        var ms = new MagicSkill(code);
 
         magictext.SetActive(true);
-        magictext.GetComponent<Text>().text = (ms.Spell1 + "." + ms.Spell2);
+        magictext.GetComponent<Text>().text = (ms.Spell);
 
         Debug.Log("QR code is :" + code);
 
@@ -187,10 +185,10 @@ public class BattleSystem : MonoBehaviour
         HP[1].color = MyOrange;
         HP[0].color = Color.white;
 
-        var ms = new NewTowelExtendedMagicSkill(DateTime.Now.ToString(), DataBasePath);
+        var ms = new MagicSkill(DateTime.Now.ToString());
 
         magictext.SetActive(true);
-        magictext.GetComponent<Text>().text = (ms.Spell1 + "." + ms.Spell2);
+        magictext.GetComponent<Text>().text = (ms.Spell);
 
         yield return AttackAndEffect(Enemy, Player, ms);
 
@@ -200,7 +198,7 @@ public class BattleSystem : MonoBehaviour
         yield break;
     }
 
-    IEnumerator AttackAndEffect(Unit Attacker, Unit Opponent, MagickSkill ms, int level = 4)
+    IEnumerator AttackAndEffect(Unit Attacker, Unit Opponent, Magick.MagicSkill ms, int level = 4)
     {
         yield return Attacker.MagicEffect(ms.Power, ms.Attribute);
         int damage = Attacker.Magic(ms.Power, level, ms.Attribute, Opponent.Attribute);

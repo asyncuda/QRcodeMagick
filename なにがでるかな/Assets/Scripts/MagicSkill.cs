@@ -13,7 +13,7 @@ namespace Magick
         Heal
     }
 
-    public class MagicSkill : MonoBehaviour
+    public class MagicSkill
     {
         /// <summary>
         /// 攻撃力
@@ -103,7 +103,7 @@ namespace Magick
                     int spell1Index = HashToIndex(0, 7);
                     int spell2Index = HashToIndex(7, 7);
                     int magickTypeSeed = HashToIndex(14, 7);
-                    int random = new System.Random(Convert.ToInt32(Hash, 16)).Next(0, int.MaxValue);
+                    int random = new System.Random(HashToIndex(14, 7)).Next(0, int.MaxValue);
                     Priority = random;
                     //QRコードごとに異なる乱数をもとにランダムに呪文の種類を決定
                     foreach (MagicType item in Enum.GetValues(typeof(MagicType)))
