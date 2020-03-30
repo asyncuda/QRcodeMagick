@@ -13,7 +13,7 @@ namespace Magick
         Heal
     }
 
-    public class MagicSkill : MonoBehaviour
+    public class MagicSkill
     {
         /// <summary>
         /// 攻撃力
