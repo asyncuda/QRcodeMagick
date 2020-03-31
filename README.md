@@ -24,5 +24,8 @@
 - DOTween
 
 ## 関連リンク
-- 2019津田沼祭企画リスト https://docs.google.com/spreadsheets/d/11YpnokPzXDH_IgMjC68St_wyxpeqPklWfxmVYOBJK58/edit#gid=0
-- 2020文化の祭典企画リストhttps://docs.google.com/spreadsheets/d/1YobEvoJun1rfPbFb7yRYIyv-BKctixZ3f73iRoiFLEA/edit#gid=0
+### 2019津田沼祭
+- 企画発表 https://drive.google.com/open?id=1tDCpn9-K47NbV34PWBr2oOpuBRV76zc3
+- 第一回進捗発表 https://drive.google.com/open?id=1-6gKmWsYeLCKtmvMd-gVMbAa3KzdFh_z
+- 第二回進捗発表 https://drive.google.com/open?id=1C7tu0Scyq1q-7kjHxWWUEbW2L9yr9pDD
+- 成果物発表 https://drive.google.com/open?id=15pbt147DLWc5oNLQHOLm6nSXf09-Du4f
