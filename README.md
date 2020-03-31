@@ -29,3 +29,5 @@
 - 第一回進捗発表 https://drive.google.com/open?id=1-6gKmWsYeLCKtmvMd-gVMbAa3KzdFh_z
 - 第二回進捗発表 https://drive.google.com/open?id=1C7tu0Scyq1q-7kjHxWWUEbW2L9yr9pDD
 - 成果物発表 https://drive.google.com/open?id=15pbt147DLWc5oNLQHOLm6nSXf09-Du4f
+### 2020文化の祭典
+- 第二回進捗発表 https://drive.google.com/open?id=1b6g5igvxrxNCyWsFpk7mITHaXv2u0DBQ
