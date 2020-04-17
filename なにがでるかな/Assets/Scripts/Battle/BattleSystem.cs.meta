@@ -3,7 +3,11 @@ guid: 74397d2c90f3e5f44a749246499df12e
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - Player: {instanceID: 0}
+  - Enemy: {instanceID: 0}
+  - QRreadinfo: {instanceID: 0}
+  - magictext: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

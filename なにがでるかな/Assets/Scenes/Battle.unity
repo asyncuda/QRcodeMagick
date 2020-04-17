@@ -240,7 +240,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 1, g: 1, b: 1, a: 0}
+  m_BackGroundColor: {r: 0.7607844, g: 0.7607844, b: 0.7607844, a: 0}
   m_projectionMatrixMode: 1
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
@@ -820,9 +820,9 @@ MonoBehaviour:
   DamageText: {fileID: 9103829435579478778, guid: 95016d75495a48149840889903663361,
     type: 3}
   _Fire: {fileID: 100004, guid: 6836f5eaa96f845c4ac0909f84272556, type: 3}
-  _Water: {fileID: 100006, guid: 44dd4fdbb6f10429a844c51183a4c84e, type: 3}
-  _Plant: {fileID: 100006, guid: 906ef3748a66347cfb2d72de10092732, type: 3}
-  _Ground: {fileID: 100006, guid: bcf46e46336114145b09deb1db11d480, type: 3}
+  _Water: {fileID: 100006, guid: bcf46e46336114145b09deb1db11d480, type: 3}
+  _Plant: {fileID: 100002, guid: 847f669bc75db4de8be28dc6dc55874d, type: 3}
+  _Ground: {fileID: 100002, guid: 9565cde8c7698420aa10544579cb6f3d, type: 3}
 --- !u!1 &1611674658
 GameObject:
   m_ObjectHideFlags: 0
@@ -939,9 +939,9 @@ MonoBehaviour:
   DamageText: {fileID: 9103829435579478778, guid: 95016d75495a48149840889903663361,
     type: 3}
   _Fire: {fileID: 100004, guid: 6836f5eaa96f845c4ac0909f84272556, type: 3}
-  _Water: {fileID: 100006, guid: 44dd4fdbb6f10429a844c51183a4c84e, type: 3}
-  _Plant: {fileID: 100006, guid: 906ef3748a66347cfb2d72de10092732, type: 3}
-  _Ground: {fileID: 100010, guid: 4d0391f078db24fac9f5cba3075f9f5d, type: 3}
+  _Water: {fileID: 100006, guid: bcf46e46336114145b09deb1db11d480, type: 3}
+  _Plant: {fileID: 100002, guid: 847f669bc75db4de8be28dc6dc55874d, type: 3}
+  _Ground: {fileID: 100002, guid: 9565cde8c7698420aa10544579cb6f3d, type: 3}
 --- !u!114 &1766817536
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -954,8 +954,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38a32550929d1674199cf578c1941a2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BroomGhost: {fileID: 21300000, guid: 42dcfe633e581a34fb921a9f3e40c0a5, type: 3}
-  PumpkinTotem: {fileID: 21300000, guid: 5a1978867c0517b4e89401f04cceeea6, type: 3}
+  BroomGhost: {fileID: 21300000, guid: a845a550287e9ec4aacf4a28bf8855a7, type: 3}
+  PumpkinTotem: {fileID: 21300000, guid: 8d0be558f7eaef140ab8158d944a3f7c, type: 3}
   CorpseSeoul: {fileID: 21300000, guid: 5cf69442a62b0684ca421e2b91456965, type: 3}
   green: {fileID: 21300000, guid: 029b2359e97ef94478d883dabb9bedec, type: 3}
 --- !u!212 &1766817537

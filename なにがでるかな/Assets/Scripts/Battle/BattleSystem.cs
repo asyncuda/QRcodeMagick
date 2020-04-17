@@ -1,3 +1,5 @@
+
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -23,8 +25,6 @@ public class BattleSystem : MonoBehaviour
 
     private Color MyOrange = new Color(255.0f / 255.0f, 165f / 255f, 0f);
 
-    private readonly string DataBasePath = Application.streamingAssetsPath + @"\spells.db";
-
     // Start is called before the first frame update
     void Start()
     {
@@ -38,7 +38,7 @@ public class BattleSystem : MonoBehaviour
 
         qr = QRreadinfo.GetComponent<QRReader>();
 
-        StartCoroutine(battle());
+        StartCoroutine(Battle());
     }
 
     // Update is called once per frame
@@ -80,7 +80,7 @@ public class BattleSystem : MonoBehaviour
         Enemy.hp = Enemy.hpmax;
     }
 
-    IEnumerator battle()
+    IEnumerator Battle()
     {
         while (true)
         {
@@ -95,7 +95,7 @@ public class BattleSystem : MonoBehaviour
                 yield break;
             }
 
-            yield return new WaitForSeconds(0.4f);
+            yield return new WaitForSeconds(2f);
 
             if (Button.level == 4)
             {
@@ -198,11 +198,12 @@ public class BattleSystem : MonoBehaviour
         yield break;
     }
 
-    IEnumerator AttackAndEffect(Unit Attacker, Unit Opponent, Magick.MagicSkill ms, int level = 4)
+    private IEnumerator AttackAndEffect(Unit Attacker, Unit Opponent, MagicSkill ms, int level = 4)
     {
-        yield return Attacker.MagicEffect(ms.Power, ms.Attribute);
+        Attacker.MagicEffect(ms.Power, ms.Attribute);
         int damage = Attacker.Magic(ms.Power, level, ms.Attribute, Opponent.Attribute);
         Opponent.Ondamage(damage);
+        yield return new WaitForSeconds(4);
         yield return Opponent.OndamageEffect(damage);
     }
 

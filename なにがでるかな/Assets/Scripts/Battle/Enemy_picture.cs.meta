@@ -3,7 +3,11 @@ guid: 38a32550929d1674199cf578c1941a2f
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - BroomGhost: {fileID: 21300000, guid: 42dcfe633e581a34fb921a9f3e40c0a5, type: 3}
+  - PumpkinTotem: {fileID: 21300000, guid: 5a1978867c0517b4e89401f04cceeea6, type: 3}
+  - CorpseSeoul: {fileID: 21300000, guid: 5cf69442a62b0684ca421e2b91456965, type: 3}
+  - green: {fileID: 21300000, guid: 8d0be558f7eaef140ab8158d944a3f7c, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

@@ -3,7 +3,13 @@ guid: f8a3cc3f5c4004b489a0950a7f83f52d
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - DamageText: {fileID: 9103829435579478778, guid: 95016d75495a48149840889903663361,
+      type: 3}
+  - _Fire: {fileID: 100004, guid: 6836f5eaa96f845c4ac0909f84272556, type: 3}
+  - _Water: {fileID: 100002, guid: 9565cde8c7698420aa10544579cb6f3d, type: 3}
+  - _Plant: {fileID: 100002, guid: 847f669bc75db4de8be28dc6dc55874d, type: 3}
+  - _Ground: {fileID: 100004, guid: 9c7ab5de5f9064a43aa3bd47004ce40b, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

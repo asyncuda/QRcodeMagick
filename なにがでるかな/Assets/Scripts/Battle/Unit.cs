@@ -1,7 +1,7 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using DG.Tweening;
+using NUnit.Framework.Constraints;
 
 public class Unit : MonoBehaviour
 {
@@ -12,6 +12,15 @@ public class Unit : MonoBehaviour
     public string Attribute;
 
     public GameObject DamageText;
+
+    [SerializeField] private GameObject _Fire;
+
+    [SerializeField] private GameObject _Water;
+
+    [SerializeField] private GameObject _Plant;
+
+    [SerializeField] private GameObject _Ground;
+
 
     // Start is called before the first frame update
     void Start()
@@ -41,25 +50,29 @@ public class Unit : MonoBehaviour
         yield return new WaitForSeconds(1f);
     }
 
-    public IEnumerator MagicEffect(int power, string magickattr)
+    public void MagicEffect(int power, string magickattr)
     {
         Debug.Log(magickattr);
-        if (magickattr == "FIRE")
+        //switchの前にデフォルト値が入っていないと例外が出るのでとりあえずのデフォルト値
+        GameObject particleObj = _Fire;
+        
+        switch (magickattr)
         {
-            yield return Shot(_Fire, this.transform.position, this.transform.position * Vector2.left, power);
+            case "FIRE":
+                particleObj = _Fire;
+                break;
+            case "WATER":
+                particleObj = _Water;
+                break;
+            case "PLANT":
+                particleObj = _Plant;
+                break;
+            case "GROUND":
+                particleObj = _Ground;
+                break;
         }
-        else if (magickattr == "WATER")
-        {
-            yield return Shot(_Water, this.transform.position, this.transform.position * Vector2.left, power);
-        }
-        else if (magickattr == "PLANT")
-        {
-            yield return Shot(_Plant, this.transform.position, this.transform.position * Vector2.left, power);
-        }
-        else if (magickattr == "GROUND")
-        {
-            yield return Shot(_Ground, this.transform.position, this.transform.position * Vector2.left, power);
-        }
+        Shot(particleObj, transform.position, transform.position * Vector2.left);
+        
     }
 
     private float SelectLevel(int level)
@@ -102,12 +115,12 @@ public class Unit : MonoBehaviour
 
     private void MainConfig(out ParticleSystem.MainModule main)
     {
-        main.duration = 2.0f;
+        main.duration = 10.0f;
         main.scalingMode = ParticleSystemScalingMode.Hierarchy;
     }
 
-    public IEnumerator Shot(GameObject ParticleObj, Vector2 from, Vector2 to, int power)
-    {
+    private void Shot(GameObject ParticleObj, Vector3 from, Vector3 to)
+	{
         GameObject obj = Instantiate(ParticleObj);
         ParticleSystem ps = obj.GetComponent<ParticleSystem>();
 
@@ -118,36 +131,14 @@ public class Unit : MonoBehaviour
 
         ps.Play();
 
-        // ギュイーンと貯めてエフェクト拡大
         ps.transform.localScale = Vector3.one;
-        for (int i = 0; i < 60; i++)
-        {
-            // Vector3.one is 単位ベクトル(1, 1, 1)
-            ps.transform.localScale += Vector3.one;
+        
+        //「ギューンと溜めて等速直線運動」パターン：3秒で10倍に拡大→1秒で座標toまで移動→破棄
+        Sequence directLinearMotion = DOTween.Sequence().Append(ps.transform.DOScale(new Vector2(10f, 10f), 3f)).Append(ps.transform.DOMove(to, 1f));
 
-            yield return null;
-        }
-
-        // ドーンと放つ(等速直線運動)
-        Vector3 go = (to - from) / 30.0f;
-        while (Vector3.Distance(to, ps.transform.position) > 0.1f)
-        {
-            ps.transform.position += go;
-            yield return null;
-        }
-
-        // エフェクトの終了を待つ
-        for (int time = 0; time < 60 && ps.isPlaying; time++) yield return null;
-
-        Destroy(obj);
+        //DOTweenアニメーション終了後、アニメーションを破棄・オブジェクトを消す
+        directLinearMotion.AppendCallback(() => { ps.DOKill(); Destroy(obj); });
+        
     }
 
-
-    [SerializeField] private GameObject _Fire;
-
-    [SerializeField] private GameObject _Water;
-
-    [SerializeField] private GameObject _Plant;
-
-    [SerializeField] private GameObject _Ground;
 }
