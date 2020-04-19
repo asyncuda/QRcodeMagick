@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
 using System;
+using System.Text;
 
 public class StringReader : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class StringReader : MonoBehaviour
 
     public IObservable<string> OnEntered => onEntered;
 
-    private string code = string.Empty;
+    private StringBuilder code = new StringBuilder();
 
     // Start is called before the first frame update
     void Start() { }
@@ -22,13 +23,13 @@ public class StringReader : MonoBehaviour
         {
             if (c == '\n' || c == '\r')
             {
-                onEntered.OnNext(code);
-                code = string.Empty;
+                onEntered.OnNext(code.ToString());
+                code = new StringBuilder(code.Length);
                 break;
             }
             else
             {
-                code += c;
+                code.Append(c);
             }
         }
     }
